@@ -1,0 +1,636 @@
+.thriftify {
+  position: relative;
+  font-size: 64px;
+  font-family: "Bebas Neue";
+  color: #fff;
+  text-align: center;
+  z-index: 0;
+}
+.navlogo {
+  cursor: pointer;
+  border: 0;
+  padding: 10px 20px;
+  background-color: transparent;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+.log-in {
+  position: relative;
+  font-size: 36px;
+  font-family: "Bebas Neue";
+  color: #fff;
+  text-align: center;
+}
+.loginbutton,
+.loginbutton1 {
+  display: flex;
+  flex-direction: row;
+}
+.loginbutton1 {
+  border-radius: 20px;
+  background-color: #1e1e1e;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+.loginbutton {
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.sign-up {
+  position: relative;
+  font-size: 36px;
+  font-family: "Bebas Neue";
+  color: #1e1e1e;
+  text-align: center;
+}
+.loginsignup,
+.navbarheader,
+.signupbutton1 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.signupbutton1 {
+  border-radius: 20px;
+  background-color: #fff;
+  justify-content: center;
+  padding: 10px;
+}
+.loginsignup,
+.navbarheader {
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+.loginsignup {
+  width: 286px;
+  padding: 0 25px;
+}
+.navbarheader {
+  align-self: stretch;
+  background-color: #1e1e1e;
+  height: 97px;
+  flex-wrap: wrap;
+  padding: 0 10px;
+}
+.all {
+  position: relative;
+  font-size: 40px;
+  font-family: "Bebas Neue";
+  color: #1e1e1e;
+  text-align: left;
+}
+.allfashion {
+  cursor: pointer;
+  border: 0;
+  padding: 10px;
+  background-color: #fff;
+  align-self: stretch;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.cores {
+  position: relative;
+  font-size: 40px;
+  font-family: "Bebas Neue";
+  color: #1e1e1e;
+  text-align: center;
+}
+.corefashion,
+.menfashion,
+.searchbar {
+  background-color: #fff;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 10px;
+}
+.corefashion {
+  cursor: pointer;
+  border: 0;
+  align-items: flex-start;
+}
+.menfashion,
+.searchbar {
+  align-items: center;
+}
+.menfashion {
+  cursor: pointer;
+  border: 0;
+}
+.searchbar {
+  border: 1px solid #1e1e1e;
+  font-family: "Bebas Neue";
+  font-size: 16px;
+  box-sizing: border-box;
+  width: 300px;
+}
+.header,
+.navsubheader {
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+}
+.navsubheader {
+  background-color: #fff;
+  border: 1px solid #1e1e1e;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px 50px;
+}
+.header {
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.groupshot-c-ximena-del-valle-6-icon {
+  align-self: stretch;
+  position: relative;
+  max-width: 100%;
+  overflow: hidden;
+  height: 389px;
+  flex-shrink: 0;
+  object-fit: cover;
+  z-index: 0;
+}
+.the-platform-for {
+  margin: 0;
+}
+.the-platform-for-container1 {
+  line-break: anywhere;
+  width: 100%;
+}
+.the-platform-for-container {
+  position: absolute;
+  margin: 0 !important;
+  width: calc(100% - 1097px);
+  top: 156px;
+  left: 548px;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+}
+.groupbanner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0 15px;
+  gap: 10px;
+  font-size: 36px;
+  color: #fff;
+}
+.groupbanner,
+.shop-by-cores-container {
+  align-self: stretch;
+  position: relative;
+}
+.helmut-lang-archive-gqstyle-sp-icon {
+  position: relative;
+  width: 213.9px;
+  height: 322px;
+  object-fit: cover;
+}
+.archive {
+  position: relative;
+  font-size: 40px;
+  font-family: "Bebas Neue";
+  color: #000;
+  text-align: center;
+}
+.archivebanner {
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+.avant-garde-imageb-7-682x1024-icon {
+  position: relative;
+  width: 182.1px;
+  height: 322px;
+  object-fit: cover;
+}
+.avantgardebanner {
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.f0c16aa4998fea7abceb0e6699afe5-icon,
+.rick-rowens-1 {
+  position: relative;
+  width: 200px;
+  height: 322px;
+  object-fit: cover;
+}
+.f0c16aa4998fea7abceb0e6699afe5-icon {
+  width: 209px;
+}
+.gorpcorebanner {
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 4px;
+}
+.bmm15293-black-xl-1-icon {
+  position: relative;
+  width: 198px;
+  height: 313px;
+  object-fit: cover;
+}
+.vintagebanner {
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 9px;
+}
+.faa401cd1989cb52419d09f7833635-icon {
+  position: relative;
+  width: 197px;
+  height: 322px;
+  object-fit: cover;
+}
+.corebanners,
+.shopbycores {
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.shopbycores {
+  flex-direction: column;
+  justify-content: center;
+}
+.tom-ford-fw19-steven-klein-01-icon {
+  align-self: stretch;
+  position: relative;
+  max-width: 100%;
+  overflow: hidden;
+  height: 915px;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+.mens-fashion1 {
+  position: relative;
+  display: inline-block;
+  width: 183px;
+  height: 54px;
+  flex-shrink: 0;
+}
+.n-1-icon {
+  position: relative;
+  width: 234px;
+  height: 248px;
+  object-fit: cover;
+}
+.nascar-jeff-gordon,
+.sta-rosalaguna {
+  position: relative;
+  font-family: "Bebas Neue";
+  text-align: left;
+}
+.nascar-jeff-gordon {
+  font-size: 16px;
+  color: #1e1e1e;
+  display: flex;
+  align-items: center;
+  width: 234px;
+  flex-shrink: 0;
+}
+.sta-rosalaguna {
+  flex: 1;
+  font-size: 12px;
+  color: #844b4b;
+}
+.mensbanner,
+.php-3500 {
+  width: 234px;
+  display: flex;
+  align-items: center;
+}
+.php-3500 {
+  position: relative;
+  font-size: 20px;
+  font-family: "Bebas Neue";
+  color: #000;
+  text-align: left;
+  flex-shrink: 0;
+}
+.mensbanner {
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.image-1-icon {
+  position: relative;
+  width: 236px;
+  height: 247.5px;
+  object-fit: cover;
+}
+.mensfashionsection {
+  align-self: stretch;
+  height: 685px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 59px;
+}
+.seemore-child {
+  position: relative;
+  width: 784.58px;
+  height: 2px;
+}
+.see-more {
+  position: relative;
+  font-size: 16px;
+  font-family: "Bebas Neue";
+  color: #fff;
+  text-align: center;
+}
+.menseemorebutton {
+  cursor: pointer;
+  border: 0;
+  padding: 10px;
+  background-color: #161414;
+  border-radius: 20px;
+  width: 86.3px;
+  height: 39px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+.seemore-item {
+  position: relative;
+  width: 743.11px;
+  height: 2px;
+}
+.mensfashion,
+.seemore {
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+}
+.seemore {
+  height: 39px;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 5px 0;
+  box-sizing: border-box;
+}
+.mensfashion {
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 15px 0;
+}
+.womans-fashion {
+  position: relative;
+}
+.gentle-woman-crop,
+.php-2200 {
+  position: relative;
+  font-size: 16px;
+  font-family: "Bebas Neue";
+  color: #1e1e1e;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  width: 234px;
+}
+.php-2200 {
+  font-size: 20px;
+  color: #000;
+}
+.womensbanner {
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  width: 234px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 5px;
+}
+.n-1-icon12 {
+  position: relative;
+  border-radius: 11px;
+  width: 234px;
+  height: 248px;
+  object-fit: cover;
+}
+.pasay-city {
+  align-self: stretch;
+  position: relative;
+  font-size: 12px;
+  font-family: "Bebas Neue";
+  color: #844b4b;
+  text-align: left;
+}
+.celine-loose-shirt {
+  font-size: 16px;
+  color: #1e1e1e;
+  display: flex;
+  align-items: center;
+  width: 234px;
+  height: 22px;
+}
+.celine-loose-shirt,
+.php-2100,
+.plaridel-bulacan1 {
+  position: relative;
+  font-family: "Bebas Neue";
+  text-align: left;
+  flex-shrink: 0;
+}
+.plaridel-bulacan1 {
+  align-self: stretch;
+  font-size: 12px;
+  color: #844b4b;
+  display: inline-block;
+  height: 16px;
+}
+.php-2100 {
+  font-size: 20px;
+  color: #000;
+  display: flex;
+  align-items: center;
+  width: 234px;
+  height: 28px;
+}
+.womensbanner4 {
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  width: 234px;
+  height: 296px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 5px;
+}
+.womensfashionsection {
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 59px;
+}
+.othersbanner4 {
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  width: 234px;
+  height: 334px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 5px;
+}
+.othersfashionsection {
+  width: 1440px;
+  height: 693.5px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 59px;
+}
+.dior-fall-mens-2020-campaign-6-icon {
+  flex: 1;
+  position: relative;
+  max-width: 100%;
+  overflow: hidden;
+  height: 1139px;
+  object-fit: cover;
+}
+.about,
+.dior-fall-mens-2020-campaign-6-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.dior-fall-mens-2020-campaign-6-wrapper {
+  align-self: stretch;
+  height: 1139px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  z-index: 0;
+}
+.about {
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  height: 63px;
+  justify-content: flex-start;
+}
+.help-faq {
+  position: relative;
+  font-size: 32px;
+  font-family: "Bebas Neue";
+  color: #000;
+  text-align: center;
+}
+.helpfaq {
+  cursor: pointer;
+  border: 0;
+  padding: 10px;
+  background-color: transparent;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.footerinfos,
+.thriftify2023,
+.thriftifyfooter {
+  width: 777px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.thriftify2023,
+.thriftifyfooter {
+  width: 222px;
+  justify-content: center;
+}
+.thriftifyfooter {
+  margin: 0 !important;
+  position: absolute;
+  width: 100%;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #fff;
+  justify-content: space-between;
+  padding: 25px 20px;
+  box-sizing: border-box;
+  z-index: 1;
+}
+.desktop-1,
+.footer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.footer {
+  align-self: stretch;
+  justify-content: center;
+  font-size: 36px;
+}
+.desktop-1 {
+  background-color: #fff;
+  width: 100%;
+  justify-content: flex-start;
+  text-align: center;
+  font-size: 40px;
+  color: #000;
+  font-family: "Bebas Neue";
+}

@@ -1,3 +1,9 @@
+.navbarheader {
+  align-self: stretch;
+  background-color: #1e1e1e;
+  height: auto;
+  width: 100%;
+}
 .thriftify {
   position: relative;
   font-size: 64px;
@@ -72,14 +78,6 @@
   padding: 0 25px;
 }
 
-.navbarheader {
-  align-self: stretch;
-  background-color: #1e1e1e;
-  height: auto;
-  width: 100%;
-  
-  padding: 0 10px;
-}
 .navsubbuttonbox {
   width: 140px;
   height: auto;
@@ -213,6 +211,7 @@
 .navsubheader {
   background-color: #fff;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: space-between;
   padding: 10px 50px;
   position: sticky; top: 0;
@@ -248,164 +247,71 @@
   align-self: stretch;
   position: relative;
 }
-.core-card {
-  overflow: visible;
+.core-book {
   position: relative;
-  width: 200px;
-  height: 322px;
-  background: #fff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, .2);
-}
-
-.core-card:before,
-.core-card:after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 4px;
-  background: #fff;
-  transition: 0.5s;
-  z-index: -99;
-}
-
-.core-details {
-  position: absolute;
-  left: -10px;
-  right: 0;
-  bottom: 5px;
-  height: 60px;
-  text-align: center;
-  text-transform: uppercase;
-}
-
-/*Image*/
-.core-imgbox {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  bottom: 10px;
-  right: 10px;
-  background: #222;
-  transition: 0.5s;
-  z-index: 1;
-}
-
-.core-img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-/*Text*/
-.core-title {
-  font-weight: 600;
-  font-size: 20px;
-  font-family: "Bebas Neue";
-  color: #1e1e1e;
-}
-
-/*Hover*/
-.core-card:hover .core-imgbox {
-  bottom: 80px;
-}
-
-.core-card:hover:before {
-  transform: rotate(20deg);
-}
-
-.core-card:hover:after {
-  transform: rotate(10deg);
-  box-shadow: 0 2px 20px rgba(0, 0, 0, .2);
-}
-.helmut-lang-archive-gqstyle-sp-icon {
-  position: relative;
-  width: 213.9px;
-  height: 322px;
-  object-fit: cover;
-}
-.archive {
-  position: relative;
-  font-size: 40px;
-  font-family: "Bebas Neue";
+  border-radius: 10px;
+  width: 220px;
+  height: 315px;
+  background-color: whitesmoke;
+  -webkit-box-shadow: 1px 1px 12px #000;
+  box-shadow: 1px 1px 12px #000;
+  -webkit-transform: preserve-3d;
+  -ms-transform: preserve-3d;
+  transform: preserve-3d;
+  -webkit-perspective: 2000px;
+  perspective: 2000px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   color: #000;
-  text-align: center;
+  padding: 5px;
 }
-.archivebanner {
+
+.core-cover {
+  top: 0;
+  position: absolute;
+  background-color: lightgray;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
   cursor: pointer;
-  border: 0;
-  padding: 0;
-  background-color: transparent;
-  align-self: stretch;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+  -webkit-transform-origin: 0;
+  -ms-transform-origin: 0;
+  transform-origin: 0;
+  -webkit-box-shadow: 1px 1px 12px #000;
+  box-shadow: 1px 1px 12px #000;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
-  justify-content: space-between;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 }
-.avant-garde-imageb-7-682x1024-icon {
-  position: relative;
-  width: 182.1px;
-  height: 322px;
-  object-fit: cover;
+
+.core-book:hover .core-cover {
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+  -webkit-transform: rotatey(-80deg);
+  -ms-transform: rotatey(-80deg);
+  transform: rotatey(-80deg);
 }
-.avantgardebanner {
-  cursor: pointer;
-  border: 0;
-  padding: 0;
-  background-color: transparent;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
+
+.core-p {
+  font-size: 20px;
+  font-weight: bolder;
 }
-.f0c16aa4998fea7abceb0e6699afe5-icon,
-.rick-rowens-1 {
-  position: relative;
-  width: 200px;
-  height: 322px;
-  object-fit: cover;
-}
-.f0c16aa4998fea7abceb0e6699afe5-icon {
-  width: 209px;
-}
-.gorpcorebanner {
-  cursor: pointer;
-  border: 0;
-  padding: 0;
-  background-color: transparent;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 4px;
-}
-.bmm15293-black-xl-1-icon {
-  position: relative;
-  width: 198px;
-  height: 313px;
-  object-fit: cover;
-}
-.vintagebanner {
-  cursor: pointer;
-  border: 0;
-  padding: 0;
-  background-color: transparent;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 9px;
-}
-.faa401cd1989cb52419d09f7833635-icon {
-  position: relative;
-  width: 197px;
-  height: 322px;
-  object-fit: cover;
-}
+
 .corebanners,
 .shopbycores {
   align-self: stretch;
@@ -413,6 +319,8 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  
 }
 .shopbycores {
   flex-direction: column;
@@ -421,74 +329,14 @@
 .tom-ford-fw19-steven-klein-01-icon {
   align-self: stretch;
   position: relative;
-  max-width: 100%;
+  width: 100%;
   overflow: hidden;
-  height: 915px;
+  height: auto;
   flex-shrink: 0;
   object-fit: cover;
 }
-.mens-fashion1 {
-  position: relative;
-  display: inline-block;
-  width: 183px;
-  height: 54px;
-  flex-shrink: 0;
-}
-.n-1-icon {
-  position: relative;
-  width: 234px;
-  height: 248px;
-  object-fit: cover;
-}
-.nascar-jeff-gordon,
-.sta-rosalaguna {
-  position: relative;
-  font-family: "Bebas Neue";
-  text-align: left;
-}
-.nascar-jeff-gordon {
-  font-size: 16px;
-  color: #1e1e1e;
-  display: flex;
-  align-items: center;
-  width: 234px;
-  flex-shrink: 0;
-}
-.sta-rosalaguna {
-  flex: 1;
-  font-size: 12px;
-  color: #844b4b;
-}
-.mensbanner,
-.php-3500 {
-  width: 234px;
-  display: flex;
-  align-items: center;
-}
-.php-3500 {
-  position: relative;
-  font-size: 20px;
-  font-family: "Bebas Neue";
-  color: #000;
-  text-align: left;
-  flex-shrink: 0;
-}
-.mensbanner {
-  cursor: pointer;
-  border: 0;
-  padding: 0;
-  background-color: transparent;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-.image-1-icon {
-  position: relative;
-  width: 236px;
-  height: 247.5px;
-  object-fit: cover;
-}
-.mensfashionsection {
+
+.fashionsection {
   align-self: stretch;
   height: 685px;
   display: flex;
@@ -497,12 +345,81 @@
   align-items: center;
   justify-content: center;
   gap: 59px;
+  padding: 10px;
 }
 
-.mensfashion {
+.fashion {
   align-self: stretch;
   display: flex;
   align-items: center;
+}
+.item-card {
+  position: relative;
+  width: 200px;
+  height: 300px;
+  background: #fff;
+  border: solid 4px #333;
+  box-shadow: -5px 5px #333;
+  transition: all .2s ease-in-out;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.item-card:hover {
+  margin: 10px 10px 0 0;
+  box-shadow: 0px 0px #333;
+}
+
+.item-card .item-img-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 50px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: filter .2s 1s ease-in-out;
+}
+
+.item-card:hover .item-img-card {
+  filter: blur(5px);
+}
+
+.item-card .item-add-cart {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 50px);
+  background-color: rgba(0, 0, 0, 0.1);
+  text-align: center;
+  line-height: 250px;
+  font-weight: bold;
+  font-size: 19px;
+  opacity: 0;
+}
+
+.item-card:hover .item-add-cart {
+  opacity: 1;
+  transition: opacity .3s 1s ease-in-out;
+}
+
+.item-card .item-info-card {
+  position: absolute;
+  background-color: #fff;
+  height: auto;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-top: solid 1px #333;
+}
+.item-card .item-info-card p {
+  font-size: 14px;
+  margin: 5px;
 }
 .seemorebutton {
   background-color: white;
@@ -526,173 +443,103 @@
   transform: translateY(2px) translateX(1px);
   box-shadow: 0 0 0 0 black;
 };
-.mensfashion {
+.fashion {
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: flex-wrap;
   padding: 15px 0;
 }
-.womans-fashion {
-  position: relative;
-}
-.gentle-woman-crop,
-.php-2200 {
-  position: relative;
-  font-size: 16px;
-  font-family: "Bebas Neue";
-  color: #1e1e1e;
-  text-align: left;
-  display: flex;
-  align-items: center;
-  width: 234px;
-}
-.php-2200 {
-  font-size: 20px;
-  color: #000;
-}
-.womensbanner {
-  cursor: pointer;
-  border: 0;
-  padding: 0;
-  background-color: transparent;
-  width: 234px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 5px;
-}
-.n-1-icon12 {
-  position: relative;
-  border-radius: 11px;
-  width: 234px;
-  height: 248px;
-  object-fit: cover;
-}
-.pasay-city {
-  align-self: stretch;
-  position: relative;
-  font-size: 12px;
-  font-family: "Bebas Neue";
-  color: #844b4b;
-  text-align: left;
-}
-.celine-loose-shirt {
-  font-size: 16px;
-  color: #1e1e1e;
-  display: flex;
-  align-items: center;
-  width: 234px;
-  height: 22px;
-}
-.celine-loose-shirt,
-.php-2100,
-.plaridel-bulacan1 {
-  position: relative;
-  font-family: "Bebas Neue";
-  text-align: left;
-  flex-shrink: 0;
-}
-.plaridel-bulacan1 {
-  align-self: stretch;
-  font-size: 12px;
-  color: #844b4b;
-  display: inline-block;
-  height: 16px;
-}
-.php-2100 {
-  font-size: 20px;
-  color: #000;
-  display: flex;
-  align-items: center;
-  width: 234px;
-  height: 28px;
-}
-.womensbanner4 {
-  cursor: pointer;
-  border: 0;
-  padding: 0;
-  background-color: transparent;
-  width: 234px;
-  height: 296px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 5px;
-}
-.womensfashionsection {
-  align-self: stretch;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 59px;
-}
-.othersbanner4 {
-  cursor: pointer;
-  border: 0;
-  padding: 0;
-  background-color: transparent;
-  width: 234px;
-  height: 334px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 5px;
-}
-.othersfashionsection {
-  width: 1440px;
-  height: 693.5px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 59px;
-}
+
 .dior-fall-mens-2020-campaign-6-icon {
   flex: 1;
   position: relative;
-  max-width: 100%;
+  width: 100%;
   overflow: hidden;
   height: 1139px;
   object-fit: cover;
 }
-.about,
-.dior-fall-mens-2020-campaign-6-wrapper {
+.about {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 .dior-fall-mens-2020-campaign-6-wrapper {
   align-self: stretch;
-  height: 1139px;
+  height: auto;
   flex-wrap: wrap;
   justify-content: space-between;
   z-index: 0;
 }
-.about {
-  cursor: pointer;
-  border: 0;
-  padding: 0;
-  background-color: transparent;
-  height: 63px;
-  justify-content: flex-start;
-}
+
 .help-faq {
+  width: 140px;
+  height: auto;
+  float: left;
+  transition: .5s linear;
   position: relative;
+  display: block;
+  overflow: hidden;
+  padding: 15px;
+  text-align: center;
+  margin: 0 5px;
+  background: transparent;
+  text-transform: uppercase;
   font-size: 32px;
   font-family: "Bebas Neue";
   color: #000;
-  text-align: center;
 }
+
+.help-faq:before {
+  position: absolute;
+  content: '';
+  left: 0;
+  bottom: 0;
+  height: 4px;
+  width: 100%;
+  border-bottom: 4px solid transparent;
+  border-left: 4px solid transparent;
+  box-sizing: border-box;
+  transform: translateX(100%);
+}
+
+.help-faq:after {
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  border-top: 4px solid transparent;
+  border-right: 4px solid transparent;
+  box-sizing: border-box;
+  transform: translateX(-100%);
+}
+
+.help-faq:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.help-faq:hover:before {
+  border-color: #262626;
+  height: 100%;
+  transform: translateX(0);
+  transition: .3s transform linear, .3s height linear .3s;
+}
+
+.help-faq:hover:after {
+  border-color: #262626;
+  height: 100%;
+  transform: translateX(0);
+  transition: .3s transform linear, .3s height linear .5s;
+}
+
 .helpfaq {
+  color: black;
+  text-decoration: none;
   cursor: pointer;
-  border: 0;
+  outline: none;
+  border: none;
+  background: transparent;
   padding: 10px;
-  background-color: transparent;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -731,6 +578,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 .footer {
   align-self: stretch;
@@ -740,9 +588,16 @@
 .desktop-1 {
   background-color: #fff;
   width: 100%;
+  height: 100vh;
   justify-content: flex-start;
   text-align: center;
   font-size: 40px;
   color: #000;
   font-family: "Bebas Neue";
+}
+@media screen and (max-width: 768px){
+
+}
+@media screen and (max-width: 480px){
+
 }

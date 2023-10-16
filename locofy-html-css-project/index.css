@@ -16,117 +16,186 @@
   align-items: center;
   justify-content: flex-start;
 }
-.log-in {
-  position: relative;
-  font-size: 36px;
-  font-family: "Bebas Neue";
-  color: #fff;
-  text-align: center;
+
+.logsignbutton {
+ width: auto;
+ height: 2.3em;
+ margin: 0.5em;
+ background: #1e1e1e;
+ color: white;
+ border: none;
+ border-radius: 20px;
+ font-size: 36px;
+ font-family: "Bebas Neue";
+ font-weight: bold;
+ cursor: pointer;
+ position: relative;
+ z-index: 1;
+ overflow: hidden;
 }
-.loginbutton,
-.loginbutton1 {
+
+.logsignbutton:hover {
+ color: black;
+}
+
+.logsignbutton:after {
+ content: "";
+ background: white;
+ position: absolute;
+ z-index: -1;
+ left: -50%;
+ right: -50%;
+ top: 0;
+ bottom: 0;
+ transform: skewX(-45deg) scale(0, 1);
+ transition: all 0.5s;
+}
+
+.logsignbutton:hover:after {
+ transform: skewX(-45deg) scale(1, 1);
+ -webkit-transition: all 0.5s;
+ transition: all 0.5s;
+}
+.logsignbuttons,
+.navbarheader{
   display: flex;
   flex-direction: row;
-}
-.loginbutton1 {
-  border-radius: 20px;
-  background-color: #1e1e1e;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
-}
-.loginbutton {
-  cursor: pointer;
-  border: 0;
-  padding: 0;
-  background-color: transparent;
-  align-items: flex-start;
-  justify-content: flex-start;
-}
-.sign-up {
-  position: relative;
-  font-size: 36px;
-  font-family: "Bebas Neue";
-  color: #1e1e1e;
-  text-align: center;
-}
-.loginsignup,
-.navbarheader,
-.signupbutton1 {
-  display: flex;
-  flex-direction: row;
   align-items: center;
 }
-.signupbutton1 {
-  border-radius: 20px;
-  background-color: #fff;
-  justify-content: center;
-  padding: 10px;
-}
-.loginsignup,
+.logsignbuttons,
 .navbarheader {
   justify-content: space-between;
   box-sizing: border-box;
 }
-.loginsignup {
-  width: 286px;
+.logsignbuttons {
+  width: 300px;
   padding: 0 25px;
 }
+
 .navbarheader {
   align-self: stretch;
   background-color: #1e1e1e;
-  height: 97px;
-  flex-wrap: wrap;
+  height: auto;
+  width: 100%;
+  
   padding: 0 10px;
 }
-.all {
+.navsubbuttonbox {
+  width: 140px;
+  height: auto;
+  float: left;
+  transition: .5s linear;
   position: relative;
-  font-size: 40px;
-  font-family: "Bebas Neue";
-  color: #1e1e1e;
-  text-align: left;
-}
-.allfashion {
-  cursor: pointer;
-  border: 0;
-  padding: 10px;
-  background-color: #fff;
-  align-self: stretch;
-  border-radius: 20px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-}
-.cores {
-  position: relative;
-  font-size: 40px;
-  font-family: "Bebas Neue";
-  color: #1e1e1e;
+  display: block;
+  overflow: hidden;
+  padding: 15px;
   text-align: center;
+  margin: 0 5px;
+  background: transparent;
+  text-transform: uppercase;
+  font-size: 40px;
+  font-family: "Bebas Neue";
+  color: #1e1e1e;
+  font-weight: 900;
 }
-.corefashion,
-.menfashion,
-.searchbar {
-  background-color: #fff;
-  border-radius: 20px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  padding: 10px;
+
+.navsubbuttonbox:before {
+  position: absolute;
+  content: '';
+  left: 0;
+  bottom: 0;
+  height: 4px;
+  width: 100%;
+  border-bottom: 4px solid transparent;
+  border-left: 4px solid transparent;
+  box-sizing: border-box;
+  transform: translateX(100%);
 }
-.corefashion {
+
+.navsubbuttonbox:after {
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  border-top: 4px solid transparent;
+  border-right: 4px solid transparent;
+  box-sizing: border-box;
+  transform: translateX(-100%);
+}
+
+.navsubbuttonbox:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.navsubbuttonbox:hover:before {
+  border-color: #262626;
+  height: 100%;
+  transform: translateX(0);
+  transition: .3s transform linear, .3s height linear .3s;
+}
+
+.navsubbuttonbox:hover:after {
+  border-color: #262626;
+  height: 100%;
+  transform: translateX(0);
+  transition: .3s transform linear, .3s height linear .5s;
+}
+
+.navsubbutton {
+  color: black;
+  text-decoration: none;
   cursor: pointer;
-  border: 0;
-  align-items: flex-start;
+  outline: none;
+  border: none;
+  background: transparent;
 }
-.menfashion,
+.searchbar-container {
+  width: 220px;
+  position: relative;
+}
+
+.searchbar-icon {
+  position: absolute;
+  right: 10px;
+  top: calc(50% + 5px);
+  transform: translateY(calc(-50% - 5px));
+}
+
+.searchbar-input {
+  width: 100%;
+  height: 40px;
+  padding: 10px;
+  transition: .2s linear;
+  border: 2.5px solid black;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.searchbar:focus {
+  outline: none;
+  border: 0.5px solid black;
+  box-shadow: -5px -5px 0px black;
+}
+
+.searchbar-container:hover > .searchbar-icon {
+  animation: anim 1s linear infinite;
+}
+
+@keyframes anim {
+  0%,
+  100% {
+    transform: translateY(calc(-50% - 5px)) scale(1);
+  }
+
+  50% {
+    transform: translateY(calc(-50% - 5px)) scale(1.1);
+  }
+}
 .searchbar {
   align-items: center;
-}
-.menfashion {
-  cursor: pointer;
-  border: 0;
 }
 .searchbar {
   border: 1px solid #1e1e1e;
@@ -143,14 +212,15 @@
 }
 .navsubheader {
   background-color: #fff;
-  border: 1px solid #1e1e1e;
   flex-direction: row;
   justify-content: space-between;
   padding: 10px 50px;
+  position: sticky; top: 0;
 }
 .header {
   flex-direction: column;
   justify-content: flex-start;
+  width: 100%;
 }
 .groupshot-c-ximena-del-valle-6-icon {
   align-self: stretch;
@@ -164,21 +234,9 @@
 }
 .the-platform-for {
   margin: 0;
-}
-.the-platform-for-container1 {
-  line-break: anywhere;
   width: 100%;
 }
-.the-platform-for-container {
-  position: absolute;
-  margin: 0 !important;
-  width: calc(100% - 1097px);
-  top: 156px;
-  left: 548px;
-  display: flex;
-  align-items: center;
-  z-index: 1;
-}
+
 .groupbanner {
   display: flex;
   flex-direction: column;
@@ -370,50 +428,34 @@
   justify-content: center;
   gap: 59px;
 }
-.seemore-child {
-  position: relative;
-  width: 784.58px;
-  height: 2px;
-}
-.see-more {
-  position: relative;
-  font-size: 16px;
-  font-family: "Bebas Neue";
-  color: #fff;
-  text-align: center;
-}
-.menseemorebutton {
-  cursor: pointer;
-  border: 0;
-  padding: 10px;
-  background-color: #161414;
-  border-radius: 20px;
-  width: 86.3px;
-  height: 39px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-}
-.seemore-item {
-  position: relative;
-  width: 743.11px;
-  height: 2px;
-}
-.mensfashion,
-.seemore {
+
+.mensfashion {
   align-self: stretch;
   display: flex;
   align-items: center;
 }
-.seemore {
-  height: 39px;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 5px 0;
-  box-sizing: border-box;
+.seemorebutton {
+  background-color: white;
+  color: black;
+  border-radius: 10em;
+  font-size: 17px;
+  font-weight: 600;
+  padding: 1em 2em;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  border: 1px solid black;
+  box-shadow: 0 0 0 0 black;
 }
+
+.seemorebutton:hover {
+  transform: translateY(-4px) translateX(-2px);
+  box-shadow: 2px 5px 0 0 black;
+};
+
+.seemorebutton:active {
+  transform: translateY(2px) translateX(1px);
+  box-shadow: 0 0 0 0 black;
+};
 .mensfashion {
   flex-direction: column;
   justify-content: flex-start;

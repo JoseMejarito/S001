@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>S001</title>
+    <title>HomePage</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bebas+Neue&amp;display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
@@ -21,7 +21,7 @@
 <body style="font-family: Bebas Neue;">
     <nav class="navbar navbar-dark navbar-expand-md bg-dark py-3" style="border-color: #1e1e1e;border-top-color: rgb(33,;border-right-color: 37,;border-bottom-color: 41);border-left-color: 37,;">
         <div class="container"><a class="navbar-brand d-flex align-items-center" value="Refresh" onclick="history.go(0)" type="button"><span class="fs-1">Thriftify</span></a>
-            <div class="btn-group" role="group"><a class="btn btn-primary btn-lg ms-md-2" role="button" data-bss-hover-animate="pulse" href="#" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px;">Sign In</a><a class="btn btn-primary btn-lg ms-md-2" role="button" data-bss-hover-animate="pulse" href="#" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px;">Register</a></div>
+            <div class="btn-group" role="group"><a class="btn btn-primary btn-lg ms-md-2" role="button" data-bss-hover-animate="pulse" href="LoginForm.html" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px;">Sign In</a><a class="btn btn-primary btn-lg ms-md-2" role="button" data-bss-hover-animate="pulse" href="RegisterForm.html" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px;">Register</a></div>
         </div>
     </nav>
     <nav class="navbar navbar-light navbar-expand-md py-3 sticky-top" style="background: var(--bs-white);">
@@ -39,7 +39,7 @@
     </nav>
     <section id="BannerHeading" class="py-4 py-xl-5">
         <div class="container">
-            <div class="text-white bg-dark border rounded border-0 p-4 p-md-5 h-100 w-100" style="background: url(&quot;assets/img/groupshotcximenadelvalle646bde6559c0e-1@2x.png&quot;) center / cover, transparent;">
+            <div class="text-white bg-dark border rounded border-0 p-4 p-md-5 h-100 w-100" style="background: url(public/groupshotcximenadelvalle646bde6559c0e-1@2x.png) center / cover, transparent;">
                 <h3 class="fw-bold text-white mb-3" style="text-align: center;">The Platform For Personal Style<br>Buy, Sell, Discover Authenticated Pieces<br>From The World's Top Brand</h3>
             </div>
         </div>
@@ -48,55 +48,67 @@
         <div class="container py-4 py-xl-5" style="margin-bottom: 0px;">
             <div class="row mb-5">
                 <div class="col-md-8 col-xl-6 text-center mx-auto">
-                    <h2>Shop By COres</h2>
+                    <h2>Shop By Cores</h2>
                 </div>
             </div>
             <div class="row gy-4 row-cols-1 row-cols-md-2">
-                <div class="col" type="button">
-                    <div class="d-flex flex-column flex-lg-row">
-                        <div class="w-100"><img class="rounded img-fluid d-block w-100 fit-cover" style="height: 200px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png"></div>
-                        <div class="py-4 py-lg-0 px-lg-4">
-                            <h4>Archive</h4>
+                <div class="col" type="button" onclick="window.location.href='ArchiveCorePage.html';">
+                    <div class="d-flex flex-column flex-lg-row position-relative">
+                        <div class="w-100">
+                            <img class="rounded img-fluid d-block w-100 fit-cover" style="height: auto;" src="public/helmutlangarchivegqstylespring13-1@2x.png">
+                            <div class="position-absolute top-50 start-50 translate-middle text-center text-white shadow-sm">
+                                <h1>Archive</h1>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col" type="button">
-                    <div class="d-flex flex-column flex-lg-row">
-                        <div class="w-100"><img class="rounded img-fluid d-block w-100 fit-cover" style="height: 200px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png"></div>
-                        <div class="py-4 py-lg-0 px-lg-4">
-                            <h4>Avant Garde</h4>
+                <div class="col" type="button" onclick="window.location.href='AvantGardeCorePage.html';">
+                    <div class="d-flex flex-column flex-lg-row position-relative">
+                        <div class="w-100">
+                            <img class="rounded img-fluid d-block w-100 fit-cover" style="height: auto;" src="public/avantgardeimageb7682x1024-1@2x.png">
+                            <div class="position-absolute top-50 start-50 translate-middle text-center text-white shadow-sm">
+                                <h1>Avant Garde</h1>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col" type="button">
-                    <div class="d-flex flex-column flex-lg-row">
-                        <div class="w-100"><img class="rounded img-fluid d-block w-100 fit-cover" style="height: 200px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png"></div>
-                        <div class="py-4 py-lg-0 px-lg-4">
-                            <h4>Designer</h4>
+                <div class="col" type="button" onclick="window.location.href='DesignerCorePage.html';">
+                    <div class="d-flex flex-column flex-lg-row position-relative">
+                        <div class="w-100">
+                            <img class="rounded img-fluid d-block w-100 fit-cover" style="height: auto;" src="public/rick-rowens-1@2x.png">
+                            <div class="position-absolute top-50 start-50 translate-middle text-center text-white shadow-sm">
+                                <h1>Designer</h1>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col" type="button">
-                    <div class="d-flex flex-column flex-lg-row">
-                        <div class="w-100"><img class="rounded img-fluid d-block w-100 fit-cover" style="height: 200px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png"></div>
-                        <div class="py-4 py-lg-0 px-lg-4">
-                            <h4>Gorp Core</h4>
+                <div class="col" type="button" onclick="window.location.href='GorpCorePage.html';">
+                    <div class="d-flex flex-column flex-lg-row position-relative">
+                        <div class="w-100">
+                            <img class="rounded img-fluid d-block w-100 fit-cover" style="height: auto;" src="public/f0c16aa4998fea7abceb0e6699afe5e9-1@2x.png">
+                            <div class="position-absolute top-50 start-50 translate-middle text-center text-white shadow-sm">
+                                <h1>Gorp Core</h1>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col" type="button">
-                    <div class="d-flex flex-column flex-lg-row">
-                        <div class="w-100"><img class="rounded img-fluid d-block w-100 fit-cover" style="height: 200px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png"></div>
-                        <div class="py-4 py-lg-0 px-lg-4">
-                            <h4>Vintage</h4>
+                <div class="col" type="button" onclick="window.location.href='VintageCorePage.html';">
+                    <div class="d-flex flex-column flex-lg-row position-relative">
+                        <div class="w-100">
+                            <img class="rounded img-fluid d-block w-100 fit-cover" style="height: auto;" src="public/0e4eab82c4e02393f31a69daada02366.jpg">
+                            <div class="position-absolute top-50 start-50 translate-middle text-center text-white shadow-sm">
+                                <h1>Vintage</h1>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col" type="button">
-                    <div class="d-flex flex-column flex-lg-row">
-                        <div class="w-100"><img class="rounded img-fluid d-block w-100 fit-cover" style="height: 200px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png"></div>
-                        <div class="py-4 py-lg-0 px-lg-4">
-                            <h4>Y2K</h4>
+                </div>                
+                <div class="col" type="button" onclick="window.location.href='Y2KCorePage.html';">
+                    <div class="d-flex flex-column flex-lg-row position-relative">
+                        <div class="w-100">
+                            <img class="rounded img-fluid d-block w-100 fit-cover" style="height: auto;" src="public/faa401cd1989cb52419d09f783363501-1@2x.png">
+                            <div class="position-absolute top-50 start-50 translate-middle text-center text-white shadow-sm">
+                                <h1>Y2K</h1>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -105,7 +117,7 @@
     </section>
     <section class="py-4 py-xl-5">
         <div class="container">
-            <div class="border rounded border-0 d-flex flex-column justify-content-center align-items-center p-4 py-5" style="background: url(&quot;assets/img/tomfordfw19stevenklein01730x472-1@2x.png&quot;) center / cover;height: 500px;"></div>
+            <div class="border rounded border-0 d-flex flex-column justify-content-center align-items-center p-4 py-5" style="background: url(public/tomfordfw19stevenklein01730x472-1@2x.png) center / cover;height: 500px;"></div>
         </div>
     </section>
     <section id="MenFashionSection">
@@ -178,7 +190,7 @@
                 </div>
             </div>
         </div>
-        <div class="text-center"><button class="btn btn-primary" data-bss-hover-animate="pulse" type="button" style="background: #1e1e1e;">See More</button></div>
+        <div class="text-center"><button class="btn btn-primary" data-bss-hover-animate="pulse" type="button" onclick="window.location.href='MenFashionPage.html';" style="background: #1e1e1e;">See More</button></div>
     </section>
     <section id="WomenFashionSection">
         <div class="container py-4 py-xl-5">
@@ -250,7 +262,7 @@
                 </div>
             </div>
         </div>
-        <div class="text-center"><button class="btn btn-primary" data-bss-hover-animate="pulse" type="button" style="background: #1e1e1e;">See More</button></div>
+        <div class="text-center"><button class="btn btn-primary" data-bss-hover-animate="pulse" type="button" onclick="window.location.href='WomenFashionPage.html';" style="background: #1e1e1e;">See More</button></div>
     </section>
     <section id="OtherSection">
         <div class="container py-4 py-xl-5">
@@ -322,35 +334,21 @@
                 </div>
             </div>
         </div>
-        <div class="text-center"><button class="btn btn-primary" data-bss-hover-animate="pulse" type="button" style="background: #1e1e1e;">See More</button></div>
+        <div class="text-center"><button class="btn btn-primary" data-bss-hover-animate="pulse" type="button" onclick="window.location.href='OthersPage.html';" style="background: #1e1e1e;">See More</button></div>
     </section>
     <section class="py-4 py-xl-5">
         <div class="container">
-            <div class="border rounded border-0 d-flex flex-column justify-content-center align-items-center p-4 py-5" style="height: 500px;background: url(&quot;assets/img/dior-fall-mens-2020-campaign-6900x687-1@2x.png&quot;) center / cover;"></div>
+            <div class="border rounded border-0 d-flex flex-column justify-content-center align-items-center p-4 py-5" style="height: 500px;background: url(public/dior-fall-mens-2020-campaign-6900x687-1@2x.png) center / cover;"></div>
         </div>
         <footer class="text-center py-4">
             <div class="container">
                 <div class="row row-cols-1 row-cols-lg-3">
                     <div class="col w-100">
                         <ul class="list-inline my-2">
-                            <li class="list-inline-item"><a class="link-secondary btn" data-toggle="modal" data-target="#PrivacyPolicy" type="button">Privacy Policy</a>
-                                <div class="modal fade" role="dialog" tabindex="-1" id="PrivacyPolicy">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">Modal Title</h4><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p>The content of your modal.</p>
-                                            </div>
-                                            <div class="modal-footer"><button class="btn btn-light" type="button" data-bs-dismiss="modal">Close</button><button class="btn btn-primary" type="button">Save</button></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list-inline-item"><a class="link-secondary btn" data-toggle="modal" data-target="#PrivacyPolicy" type="button">Terms of Use</a></li>
-                            <li class="list-inline-item"><a class="link-secondary btn" data-toggle="modal" data-target="#PrivacyPolicy" type="button">Contact</a></li>
-                            <li class="list-inline-item"><a class="link-secondary btn" data-toggle="modal" data-target="#PrivacyPolicy" type="button">About</a></li>
+                            <li class="list-inline-item"><a class="link-secondary btn" type="button" href="PrivacyPolicyPage.html">Privacy Policy</a></li>
+                            <li class="list-inline-item"><a class="link-secondary btn" type="button" href="TermsOfUsePage.html">Terms of Use</a></li>
+                            <li class="list-inline-item"><a class="link-secondary btn" type="button" href="ContactPage.html">Contact</a></li>
+                            <li class="list-inline-item"><a class="link-secondary btn" type="button" href="AboutPage.html">About</a></li>
                         </ul>
                     </div>
                     <div class="col offset-lg-4">

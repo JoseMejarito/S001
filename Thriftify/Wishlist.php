@@ -154,6 +154,7 @@ function getCoreName($core) {
                                 <!-- Add the "Remove from Wishlist" button -->
                                 <div class="mt-3">
                                     <button class="btn btn-danger" type="button" onclick="removeFromWishlist(<?= $wishlistItem['listing_id'] ?>);">Remove from Wishlist</button>
+                                    <button class="btn btn-info" type="button" onclick="window.location.href=\'send_message.php?seller_id=' . $row['seller_id'] . '\'">Message</button>
                                 </div>
                             </div>
                         </div>

@@ -116,7 +116,7 @@ function getCoreName($core) {
                             <div class="card">
                                 <img class="card-img-top w-100 d-block fit-cover h-100" style="height: 200px;" src="' . $row["image_path"] . '">
                                 <div class="card-body p-4">
-                                    <p class="text-primary card-text mb-0">' . $row["product_price"] . '</p>
+                                    <p class="text-primary card-text mb-0">PHP ' . $row["product_price"] . '</p>
                                     <h4 class="card-title">' . $row["product_name"] . '</h4>
                                     <p class="card-text">' . $row["product_description"] . '</p>
                                     <div>

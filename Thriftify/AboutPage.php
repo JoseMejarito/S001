@@ -65,16 +65,16 @@ if ($con->connect_error) {
     <div class="container py-4 py-xl-5">
         <div class="row mb-4 mb-lg-5">
             <div class="col-md-8 col-xl-6 text-center mx-auto">
-                <h2>Our Team</h2>
-                <p class="w-lg-50">Curae hendrerit donec commodo hendrerit egestas tempus, turpis facilisis nostra nunc. Vestibulum dui eget ultrices.</p>
+                <h2>About Us</h2>
+                <p class="w-lg-50">Thriftify is a Digitalized Marketplace made for Thrift Stores in the Philippines.<br>Our goal is to widen the community and reach of Filipino Thrift Stores and Thrift Shopping nationwide.</p>
             </div>
         </div>
         <div class="row gy-4 row-cols-2 row-cols-md-4">
             <div class="col">
                 <div class="card border-0 shadow-none">
-                    <div class="card-body text-center d-flex flex-column align-items-center p-0"><img class="rounded-circle mb-3 fit-cover" width="130" height="130" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
-                        <h5 class="fw-bold text-primary card-title mb-0" style="border-color: #1e1e1e;color: #1e1e1e;"><strong>John Smith</strong></h5>
-                        <p class="text-muted card-text mb-2">Erat netus</p>
+                    <div class="card-body text-center d-flex flex-column align-items-center p-0"><img class="rounded-circle mb-3 fit-cover" width="130" height="130" src="public/PNG image.png">
+                        <h5 class="fw-bold text-black card-title mb-0" style="border-color: #1e1e1e;color: #1e1e1e;"><strong>Mejarito, Jose Gabriel B.</strong></h5>
+                        <p class="text-muted card-text mb-2">Creative Director<br>Web Director<br>Project Manager</p>
                         <ul class="list-inline fs-6 text-muted w-100 mb-0">
                             <li class="list-inline-item text-center">
                                 <div class="d-flex flex-column align-items-center"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-facebook">
@@ -95,9 +95,9 @@ if ($con->connect_error) {
             </div>
             <div class="col">
                 <div class="card border-0 shadow-none">
-                    <div class="card-body text-center d-flex flex-column align-items-center p-0"><img class="rounded-circle mb-3 fit-cover" width="130" height="130" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
-                        <h5 class="fw-bold text-primary card-title mb-0" style="border-color: #1e1e1e;color: #1e1e1e;"><strong>John Smith</strong></h5>
-                        <p class="text-muted card-text mb-2">Erat netus</p>
+                    <div class="card-body text-center d-flex flex-column align-items-center p-0"><img class="rounded-circle mb-3 fit-cover" width="130" height="130" src="public/IMG_4125.JPG">
+                        <h5 class="fw-bold text-black card-title mb-0" style="border-color: #1e1e1e;color: #1e1e1e;"><strong>Sanchez, Mykl Hector A.</strong></h5>
+                        <p class="text-muted card-text mb-2">Creative Director<br>Project Manager</p>
                         <ul class="list-inline fs-6 text-muted w-100 mb-0">
                             <li class="list-inline-item text-center">
                                 <div class="d-flex flex-column align-items-center"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-facebook">
@@ -118,9 +118,9 @@ if ($con->connect_error) {
             </div>
             <div class="col">
                 <div class="card border-0 shadow-none">
-                    <div class="card-body text-center d-flex flex-column align-items-center p-0"><img class="rounded-circle mb-3 fit-cover" width="130" height="130" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
-                        <h5 class="fw-bold text-primary card-title mb-0" style="border-color: #1e1e1e;color: #1e1e1e;"><strong>John Smith</strong></h5>
-                        <p class="text-muted card-text mb-2">Erat netus</p>
+                    <div class="card-body text-center d-flex flex-column align-items-center p-0"><img class="rounded-circle mb-3 fit-cover" width="130" height="130" src="public/PNG image 2.png">
+                        <h5 class="fw-bold text-black card-title mb-0" style="border-color: #1e1e1e;color: #1e1e1e;"><strong>Bautista, Symon Gabriel M.</strong></h5>
+                        <p class="text-muted card-text mb-2">Project Manager</p>
                         <ul class="list-inline fs-6 text-muted w-100 mb-0">
                             <li class="list-inline-item text-center">
                                 <div class="d-flex flex-column align-items-center"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-facebook">
@@ -141,9 +141,9 @@ if ($con->connect_error) {
             </div>
             <div class="col">
                 <div class="card border-0 shadow-none">
-                    <div class="card-body text-center d-flex flex-column align-items-center p-0"><img class="rounded-circle mb-3 fit-cover" width="130" height="130" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
-                        <h5 class="fw-bold text-primary card-title mb-0" style="border-color: #1e1e1e;color: #1e1e1e;"><strong>John Smith</strong></h5>
-                        <p class="text-muted card-text mb-2">Erat netus</p>
+                    <div class="card-body text-center d-flex flex-column align-items-center p-0"><img class="rounded-circle mb-3 fit-cover" width="130" height="130" src="public/PNG image 3.png">
+                        <h5 class="fw-bold text-black card-title mb-0" style="border-color: #1e1e1e;color: #1e1e1e;"><strong>Decina, Niel Alexander A.</strong></h5>
+                        <p class="text-muted card-text mb-2">Art Director</p>
                         <ul class="list-inline fs-6 text-muted w-100 mb-0">
                             <li class="list-inline-item text-center">
                                 <div class="d-flex flex-column align-items-center"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-facebook">

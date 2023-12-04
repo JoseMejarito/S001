@@ -109,6 +109,7 @@ if ($con->connect_error) {
                                 <option value="4">Gorp Core</option>
                                 <option value="5">Vintage</option>
                                 <option value="6">Y2K</option>
+                                <option value="7">Others</option>
                             </select>
                         </div>
                         <div class="mb-3">

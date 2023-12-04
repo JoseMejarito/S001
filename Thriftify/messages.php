@@ -1,9 +1,6 @@
 <?php
 session_start();
 
-error_reporting(E_ALL);
-ini_set('display_errors', true);
-
 $host = "localhost";
 $username = "root";
 $password = "";
@@ -11,42 +8,10 @@ $database = "database";
 
 $con = new MySQLi($host, $username, $password, $database);
 
-if ($con->connect_error) {
-    die("Connection failed: " . $con->connect_error);
-}
-
-$user_id = $_SESSION['user_id'];
-
-// Retrieve user information
-$query = "SELECT * FROM users WHERE user_id = '$user_id'";
-$result = $con->query($query);
-
-if ($result) {
-    $user = $result->fetch_assoc();
-} else {
-    echo "Error: " . $query . "<br>" . $con->error;
-}
-
-// Check if the form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Handle optional changes
-    $newName = isset($_POST["newName"]) ? $_POST["newName"] : $user['name'];
-    $newEmail = isset($_POST["newEmail"]) ? $_POST["newEmail"] : $user['email'];
-    
-    // Handle password change and hashing
-    $newPassword = isset($_POST["newPassword"]) ? password_hash($_POST["newPassword"], PASSWORD_DEFAULT) : $user['password'];
-
-    // Update user information
-    $updateQuery = "UPDATE users SET name = '$newName', email = '$newEmail', password = '$newPassword' WHERE user_id = '$user_id'";
-    $updateResult = $con->query($updateQuery);
-
-    if ($updateResult) {
-        // Redirect to the profile page or handle success accordingly
-        header("Location: profile.php");
-        exit();
-    } else {
-        echo "Error: " . $updateQuery . "<br>" . $con->error;
-    }
+// Additional check for user authentication
+if (!isset($_SESSION["user_id"])) {
+    header("Location: login.php");
+    exit();
 }
 ?>
 
@@ -56,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Profile</title>
+    <title>Messages</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bebas+Neue&amp;display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
@@ -77,15 +42,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="btn-group" role="group">
                 <?php
                 if (isset($_SESSION["user_id"])) {
-                    $username = $_SESSION["user_name"];
-                    var_dump($username); // Debugging line
+                    // If the user is logged in, show the profile dropdown
                     echo '<div class="dropdown">
                             <button class="btn btn-primary dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px; z-index: 2;"> 
-                                <i class="bi bi-person"></i>
-                                <span class="d-none d-md-inline mx-2">' . $username . '</span>
+                                ' . $_SESSION["user_name"] . '
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="profileDropdown" style="z-index: 2;">
-                                <li class="dropdown-header">' . $username . '</li>
                                 <li><a class="dropdown-item" href="profile.php">Profile</a></li>
                                 <li><a class="dropdown-item" href="MyListings.php">My Listings</a></li>
                                 <li><a class="dropdown-item" href="Wishlist.php">Wishlist</a></li>
@@ -93,11 +55,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <li><a class="dropdown-item" href="logout.php">Logout</a></li>
                             </ul>
                         </div>';
-                    $current_page = basename($_SERVER['PHP_SELF']);
-                    if ($current_page == 'MyListings.php') {
-                        echo '<a href="NewListing.php" class="btn btn-primary ms-md-2" role="button" data-bss-hover-animate="pulse" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px;">New Listing</a>';
-                    }
                 } else {
+                    // If the user is not logged in, show Sign In and Register buttons
                     echo '<a class="btn btn-primary btn-lg ms-md-2" role="button" data-bss-hover-animate="pulse" href="login.php" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px;">Sign In</a>
                         <a class="btn btn-primary btn-lg ms-md-2" role="button" data-bss-hover-animate="pulse" href="RegisterForm.html" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px;">Register</a>';
                 }
@@ -106,24 +65,63 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </nav>
     <div class="container mt-5">
-        <h2>Edit Profile</h2>
-        <form action="" method="post">
-            <div class="mb-3">
-                <label for="newName" class="form-label">New Name</label>
-                <input type="text" class="form-control" id="newName" name="newName" value="<?php echo $user['name']; ?>">
+        <h2>Messages</h2>
+        <div class="messenger-container">
+            <div class="contacts">
+                <h4>Contacts</h4>
+                <ul class="contact-list">
+                    <?php
+                    $user_id = $_SESSION["user_id"];
+                    $contacts_query = $con->query("SELECT DISTINCT contact_id FROM messages WHERE user_id = $user_id");
+
+                    if ($contacts_query->num_rows > 0) {
+                        while ($contact_row = $contacts_query->fetch_assoc()) {
+                            $contact_id = $contact_row["contact_id"];
+                            echo "<li class='contact-list-item'><a href='messages.php?user_id=$contact_id'>User $contact_id</a></li>";
+                        }
+                    } else {
+                        echo "<p>Nothing to see here.</p>";
+                    }
+                    ?>
+                </ul>
             </div>
-            <div class="mb-3">
-                <label for="newEmail" class="form-label">New Email</label>
-                <input type="email" class="form-control" id="newEmail" name="newEmail" value="<?php echo $user['email']; ?>">
+
+            <div class="messages">
+                <?php
+                if (isset($_GET["user_id"])) {
+                    $selectedUserId = $_GET["user_id"];
+
+                    $messages_query = $con->query("SELECT * FROM messages WHERE (user_id = $user_id AND contact_id = $selectedUserId) OR (user_id = $selectedUserId AND contact_id = $user_id) ORDER BY timestamp");
+
+                    if ($messages_query->num_rows > 0) {
+                        echo "<h4>Conversation with User $selectedUserId</h4>";
+                        echo "<ul class='message-list'>";
+                        while ($message_row = $messages_query->fetch_assoc()) {
+                            echo "<li class='message-list-item'>" . $message_row["message"] . "</li>";
+                        }
+                        echo "</ul>";
+                    } else {
+                        echo "<p>No messages with User $selectedUserId.</p>";
+                    }
+                } else {
+                    echo "<p>Select a user to start a conversation.</p>";
+                }
+                ?>
+
+                <div class="message-input">
+                    <form action="" method="post">
+                        <div class="mb-3">
+                            <label for="message">Your Message:</label>
+                            <textarea id="message" name="message" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send</button>
+                    </form>
+                </div>
             </div>
-            <div class="mb-3">
-                <label for="newPassword" class="form-label">New Password</label>
-                <input type="password" class="form-control" id="newPassword" name="newPassword">
-            </div>
-            <button type="submit" class="btn btn-primary">Save Changes</button>
-            <a href="profile.php" class="btn btn-secondary">Cancel</a>
-        </form>
+        </div>
     </div>
+
+
     <section class="py-4 py-xl-5">
         <div class="container">
             <div class="border rounded border-0 d-flex flex-column justify-content-center align-items-center p-4 py-5" style="height: 500px;background: url(&quot;assets/img/dior-fall-mens-2020-campaign-6900x687-1@2x.png&quot;) center / cover;"></div>
@@ -152,5 +150,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/6.4.8/swiper-bundle.min.js"></script>
     <script src="assets/js/Simple-Slider.js"></script>
 </body>
-
 </html>

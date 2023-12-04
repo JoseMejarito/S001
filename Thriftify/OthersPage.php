@@ -38,6 +38,8 @@ function getCoreName($core) {
             return 'Vintage';
         case 6:
             return 'Y2K';
+        case 7:
+            return 'Others';
         default:
             return 'Unknown';
     }

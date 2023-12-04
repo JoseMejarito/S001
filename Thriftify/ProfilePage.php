@@ -1,51 +1,68 @@
 <?php
 session_start();
 
-error_reporting(E_ALL);
-ini_set('display_errors', true);
-
 $host = "localhost";
 $username = "root";
 $password = "";
-$database = "database";
+$database = "database"; // Replace with your actual database name
 
 $con = new MySQLi($host, $username, $password, $database);
 
-if ($con->connect_error) {
-    die("Connection failed: " . $con->connect_error);
+// Additional check for user authentication
+if (!isset($_SESSION["user_id"])) {
+    header("Location: login.php");
+    exit();
 }
 
-$user_id = $_SESSION['user_id'];
+$user_id = $_SESSION["user_id"];
 
-// Retrieve user information
-$query = "SELECT * FROM users WHERE user_id = '$user_id'";
-$result = $con->query($query);
+// Fetch user data
+$user_query = $con->query("SELECT * FROM users WHERE user_id = $user_id");
 
-if ($result) {
-    $user = $result->fetch_assoc();
-} else {
-    echo "Error: " . $query . "<br>" . $con->error;
+if ($user_query->num_rows > 0) {
+    $user_data = $user_query->fetch_assoc();
 }
 
-// Check if the form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Handle optional changes
-    $newName = isset($_POST["newName"]) ? $_POST["newName"] : $user['name'];
-    $newEmail = isset($_POST["newEmail"]) ? $_POST["newEmail"] : $user['email'];
-    
-    // Handle password change and hashing
-    $newPassword = isset($_POST["newPassword"]) ? password_hash($_POST["newPassword"], PASSWORD_DEFAULT) : $user['password'];
+// Fetch user listings
+$listings_query = $con->query("SELECT * FROM listings WHERE user_id = $user_id");
 
-    // Update user information
-    $updateQuery = "UPDATE users SET name = '$newName', email = '$newEmail', password = '$newPassword' WHERE user_id = '$user_id'";
-    $updateResult = $con->query($updateQuery);
+if ($listings_query->num_rows > 0) {
+    while ($listing_row = $listings_query->fetch_assoc()) {
+        $listings[] = $listing_row;
+    }
+}
 
-    if ($updateResult) {
-        // Redirect to the profile page or handle success accordingly
-        header("Location: profile.php");
-        exit();
-    } else {
-        echo "Error: " . $updateQuery . "<br>" . $con->error;
+function getCategoryName($category) {
+    switch ($category) {
+        case 1:
+            return 'Men';
+        case 2:
+            return 'Women';
+        case 3:
+            return 'Others';
+        default:
+            return 'Unknown';
+    }
+}
+
+function getCoreName($core) {
+    switch ($core) {
+        case 1:
+            return 'Archive';
+        case 2:
+            return 'Avant Garde';
+        case 3:
+            return 'Designer';
+        case 4:
+            return 'Gorp Core';
+        case 5:
+            return 'Vintage';
+        case 6:
+            return 'Y2K';
+        case 7:
+            return 'Others';
+        default:
+            return 'Unknown';
     }
 }
 ?>
@@ -56,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Profile</title>
+    <title>User Profile</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bebas+Neue&amp;display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
@@ -77,15 +94,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="btn-group" role="group">
                 <?php
                 if (isset($_SESSION["user_id"])) {
-                    $username = $_SESSION["user_name"];
-                    var_dump($username); // Debugging line
+                    // If the user is logged in, show the profile dropdown
                     echo '<div class="dropdown">
                             <button class="btn btn-primary dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px; z-index: 2;"> 
-                                <i class="bi bi-person"></i>
-                                <span class="d-none d-md-inline mx-2">' . $username . '</span>
+                                ' . $_SESSION["user_name"] . '
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="profileDropdown" style="z-index: 2;">
-                                <li class="dropdown-header">' . $username . '</li>
                                 <li><a class="dropdown-item" href="profile.php">Profile</a></li>
                                 <li><a class="dropdown-item" href="MyListings.php">My Listings</a></li>
                                 <li><a class="dropdown-item" href="Wishlist.php">Wishlist</a></li>
@@ -93,11 +107,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <li><a class="dropdown-item" href="logout.php">Logout</a></li>
                             </ul>
                         </div>';
-                    $current_page = basename($_SERVER['PHP_SELF']);
-                    if ($current_page == 'MyListings.php') {
-                        echo '<a href="NewListing.php" class="btn btn-primary ms-md-2" role="button" data-bss-hover-animate="pulse" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px;">New Listing</a>';
-                    }
                 } else {
+                    // If the user is not logged in, show Sign In and Register buttons
                     echo '<a class="btn btn-primary btn-lg ms-md-2" role="button" data-bss-hover-animate="pulse" href="login.php" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px;">Sign In</a>
                         <a class="btn btn-primary btn-lg ms-md-2" role="button" data-bss-hover-animate="pulse" href="RegisterForm.html" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px;">Register</a>';
                 }
@@ -105,25 +116,54 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </nav>
-    <div class="container mt-5">
-        <h2>Edit Profile</h2>
-        <form action="" method="post">
-            <div class="mb-3">
-                <label for="newName" class="form-label">New Name</label>
-                <input type="text" class="form-control" id="newName" name="newName" value="<?php echo $user['name']; ?>">
+    <section>
+        <div class="container py-4 py-xl-5">
+            <div class="row mb-5">
+                <div class="col-md-8 col-xl-6 text-center mx-auto">
+                    <h2>My Listings</h2>
+                </div>
             </div>
-            <div class="mb-3">
-                <label for="newEmail" class="form-label">New Email</label>
-                <input type="email" class="form-control" id="newEmail" name="newEmail" value="<?php echo $user['email']; ?>">
+            <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
+                <?php
+                // Check if there are listings
+                if (empty($listings)) {
+                    echo '<div class="col-md-8 col-xl-6 text-center mx-auto">
+                            <p>Nothing to show here</p>
+                        </div>';
+                } else {
+                    // Loop through user's listings and generate card items
+                    foreach ($listings as $listing) {
+                        echo '<div class="col">
+                            <div class="card" type="button">
+                                <img class="card-img-top w-100 d-block fit-cover h-100" src="' . $listing['image_path'] . '">
+                                <div class="card-body p-4">
+                                    <p class="text-primary card-text mb-0">PHP ' . $listing['product_price'] . '</p>
+                                    <h4 class="card-title">' . $listing['product_name'] . '</h4>
+                                    <p class="card-text">' . $listing['product_description'] . '</p>
+                                    <div class="d-flex">
+                                        <div>
+                                            <p class="fw-bold mb-0" type="button">' . $listing['seller_name'] . '</p>
+                                            <p class="text-muted mb-0" type="button">' . $listing['location'] . '</p>
+                                        </div>
+                                    </div>
+                                    <div class="mt-3">
+                                        <p>Category: <a>' . getCategoryName($listing["category"]) . '</a></p>
+                                        <p>Core: <a>' . getCoreName($listing["core"]) . '</a></p>
+                                    </div>
+                                    <div class="mt-3">
+                                        <a href="edit_listing.php?listing_id=' . $listing['listing_id'] . '" class="btn btn-warning">Edit</a>
+                                        <a href="delete_listing.php?listing_id=' . $listing['listing_id'] . '" class="btn btn-danger" onclick="return confirm(\'Are you sure you want to delete this listing?\')">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>';
+                    }
+                }
+                ?>
             </div>
-            <div class="mb-3">
-                <label for="newPassword" class="form-label">New Password</label>
-                <input type="password" class="form-control" id="newPassword" name="newPassword">
-            </div>
-            <button type="submit" class="btn btn-primary">Save Changes</button>
-            <a href="profile.php" class="btn btn-secondary">Cancel</a>
-        </form>
-    </div>
+        </div>
+    </section>
+
     <section class="py-4 py-xl-5">
         <div class="container">
             <div class="border rounded border-0 d-flex flex-column justify-content-center align-items-center p-4 py-5" style="height: 500px;background: url(&quot;assets/img/dior-fall-mens-2020-campaign-6900x687-1@2x.png&quot;) center / cover;"></div>
@@ -152,5 +192,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/6.4.8/swiper-bundle.min.js"></script>
     <script src="assets/js/Simple-Slider.js"></script>
 </body>
-
 </html>

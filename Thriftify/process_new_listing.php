@@ -44,25 +44,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user_id = $_SESSION['user_id'];
 
     // Fetch seller_name from users table
-    $sellerNameQuery = "SELECT name as user_name FROM users WHERE user_id = $user_id";
-    $sellerNameResult = $con->query($sellerNameQuery);
+    $sellerNameQuery = "SELECT name as user_name FROM users WHERE user_id = ?";
+    $stmt = $con->prepare($sellerNameQuery);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $sellerNameResult = $stmt->get_result();
+    $stmt->close();
 
     if ($sellerNameResult->num_rows > 0) {
         $sellerName = $sellerNameResult->fetch_assoc()["user_name"];
 
-        // Insert data into the database
-        $query = "INSERT INTO listings (user_id, product_name, product_description, product_price, location, category, core, image_path, seller_name)
-                  VALUES ('$user_id', '$productName', '$productDescription', $productPrice, '$location', $category, $core, '" . implode(",", $uploadedImages) . "', '$sellerName')";
+        // Use prepared statements to prevent SQL injection
+        $stmt = $con->prepare("INSERT INTO listings (user_id, product_name, product_description, product_price, location, category, core, image_path, seller_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("issssisss", $user_id, $productName, $productDescription, $productPrice, $location, $category, $core, implode(",", $uploadedImages), $sellerName);
 
-        $result = $con->query($query);
-
-        // Redirect to a success page or handle errors accordingly
-        if ($result) {
+        if ($stmt->execute()) {
             header("Location: MyListings.php");
             exit();
         } else {
-            echo "Error: " . $query . "<br>" . $con->error;
+            echo "Error: " . $stmt->error;
         }
+
+        $stmt->close();
     } else {
         echo "Error: User not found";
     }

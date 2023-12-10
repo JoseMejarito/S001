@@ -89,33 +89,41 @@ function getCoreName($core) {
 </head>
 
 <body style="font-family: 'Bebas Neue', serif;">
+<?php
+    function isUserLoggedIn() {
+        return isset($_SESSION["user_id"]);
+    }
+
+    function renderUserDropdown() {
+        echo '<div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px; z-index: 2;"> 
+                    ' . $_SESSION["user_name"] . '
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="profileDropdown" style="z-index: 2;">
+                    <li><a class="dropdown-item" href="profile.php">Profile</a></li>
+                    <li><a class="dropdown-item" href="MyListings.php">My Listings</a></li>
+                    <li><a class="dropdown-item" href="Wishlist.php">Wishlist</a></li>
+                    <li><a class="dropdown-item" href="messages.php">Messages</a></li>
+                    <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+                </ul>
+            </div>';
+    }
+
+    function renderGuestButtons() {
+        echo '<a class="btn btn-primary btn-lg ms-md-2" role="button" data-bss-hover-animate="pulse" href="login.php" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px;">Sign In</a>
+            <a class="btn btn-primary btn-lg ms-md-2" role="button" data-bss-hover-animate="pulse" href="RegisterForm.html" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px;">Register</a>';
+    }
+    ?>
+
     <nav class="navbar navbar-dark navbar-expand-md bg-dark py-3" style="border-color: #1e1e1e; border-top-color: rgb(33,37,41); border-left-color: 37;">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="HomePage.php"><span class="fs-1">Thriftify</span></a>
             <div class="btn-group" role="group">
-                <?php
-                if (isset($_SESSION["user_id"])) {
-                    echo '<div class="dropdown">
-                            <button class="btn btn-primary dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px; z-index: 2;"> 
-                                ' . $_SESSION["user_name"] . '
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="profileDropdown" style="z-index: 2;">
-                                <li><a class="dropdown-item" href="profile.php">Profile</a></li>
-                                <li><a class="dropdown-item" href="MyListings.php">My Listings</a></li>
-                                <li><a class="dropdown-item" href="Wishlist.php">Wishlist</a></li>
-                                <li><a class="dropdown-item" href="messages.php">Messages</a></li>
-                                <li><a class="dropdown-item" href="logout.php">Logout</a></li>
-                            </ul>
-                        </div>';
-                        $current_page = basename($_SERVER['PHP_SELF']);
-                        if ($current_page == 'MyListings.php') {
-                            echo '<a href="NewListing.php" class="btn btn-primary btn-lg ms-md-2" role="button" data-bss-hover-animate="pulse" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px;">New Listing</a>';
-                        }
-                } else {
-                    echo '<a class="btn btn-primary btn-lg ms-md-2" role="button" data-bss-hover-animate="pulse" href="login.php" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px;">Sign In</a>
-                        <a class="btn btn-primary btn-lg ms-md-2" role="button" data-bss-hover-animate="pulse" href="RegisterForm.html" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px;">Register</a>';
-                }
-                ?>
+                <?php if (isUserLoggedIn()): ?>
+                    <?php renderUserDropdown(); ?>
+                <?php else: ?>
+                    <?php renderGuestButtons(); ?>
+                <?php endif; ?>
             </div>
         </div>
     </nav>
@@ -136,8 +144,8 @@ function getCoreName($core) {
                 <!-- Loop through wishlist items -->
                 <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
                 <?php foreach ($wishlistItems as $wishlistItem) : ?>
-                    <div class="col">
-                        <div class="card" type="button">
+                    <div class="col" onclick="redirectToItemPage(<?= $wishlistItem['listing_id'] ?>)">
+                        <div class="card">
                             <img class="card-img-top w-100 d-block fit-cover h-100" style="height: 200px;" src="<?= $wishlistItem['image_path'] ?>">
                             <div class="card-body p-4">
                                 <p class="text-primary card-text mb-0">PHP <?= $wishlistItem['product_price'] ?></p>
@@ -145,25 +153,28 @@ function getCoreName($core) {
                                 <p class="card-text"><?= $wishlistItem['product_description'] ?></p>
                                 <div class="d-flex">
                                     <div>
-                                        <p class="fw-bold mb-0" type="button"><?= $wishlistItem['seller_name'] ?></p>
-                                        <p class="text-muted mb-0" type="button"><?= $wishlistItem['location'] ?></p>
+                                        <p class="fw-bold mb-0"><?= $wishlistItem['seller_name'] ?></p>
+                                        <p class="text-muted mb-0"><?= $wishlistItem['location'] ?></p>
                                     </div>
                                 </div>
                                 <div class="mt-3">
-                                        <p>Category: <a><?= getCategoryName($wishlistItem["category"]) ?></a></p>
-                                        <p>Core: <a><?= getCoreName($wishlistItem["core"]) ?></a></p>
-                                    </div>
+                                    <p>Category: <a><?= getCategoryName($wishlistItem["category"]) ?></a></p>
+                                    <p>Core: <a><?= getCoreName($wishlistItem["core"]) ?></a></p>
+                                </div>
                                 <!-- Add the "Remove from Wishlist" button -->
                                 <div class="mt-3">
-                                    <button class="btn btn-danger" type="button" onclick="removeFromWishlist(<?= $wishlistItem['listing_id'] ?>);">Remove from Wishlist</button>
-                                    <button class="btn btn-info" type="button" onclick="window.location.href=\'send_message.php?seller_id=' . $row['seller_id'] . '\'">Message</button>
+                                    <button class="btn btn-dark" type="button" onclick="removeFromWishlist(<?= $wishlistItem['listing_id'] ?>);">Remove from Wishlist</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 <?php endforeach; ?>
-
-                </div>
+            </div>
+            <script>
+                function redirectToItemPage(listingId) {
+                    window.location.href = 'ItemPage.php?listing_id=' + listingId;
+                }
+            </script>
             <?php endif; ?>
         </div>
     </section>

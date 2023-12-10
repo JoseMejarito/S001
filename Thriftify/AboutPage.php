@@ -34,31 +34,41 @@ if ($con->connect_error) {
 </head>
 
 <body style="font-family: 'Bebas Neue', serif;">
+    <?php
+    function isUserLoggedIn() {
+        return isset($_SESSION["user_id"]);
+    }
+
+    function renderUserDropdown() {
+        echo '<div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px; z-index: 2;"> 
+                    ' . $_SESSION["user_name"] . '
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="profileDropdown" style="z-index: 2;">
+                    <li><a class="dropdown-item" href="profile.php">Profile</a></li>
+                    <li><a class="dropdown-item" href="MyListings.php">My Listings</a></li>
+                    <li><a class="dropdown-item" href="Wishlist.php">Wishlist</a></li>
+                    <li><a class="dropdown-item" href="messages.php">Messages</a></li>
+                    <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+                </ul>
+            </div>';
+    }
+
+    function renderGuestButtons() {
+        echo '<a class="btn btn-primary btn-lg ms-md-2" role="button" data-bss-hover-animate="pulse" href="login.php" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px;">Sign In</a>
+            <a class="btn btn-primary btn-lg ms-md-2" role="button" data-bss-hover-animate="pulse" href="RegisterForm.html" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px;">Register</a>';
+    }
+    ?>
+
     <nav class="navbar navbar-dark navbar-expand-md bg-dark py-3" style="border-color: #1e1e1e; border-top-color: rgb(33,37,41); border-left-color: 37;">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="HomePage.php"><span class="fs-1">Thriftify</span></a>
             <div class="btn-group" role="group">
-                <?php
-                if (isset($_SESSION["user_id"])) {
-                    // If the user is logged in, show the profile dropdown
-                    echo '<div class="dropdown">
-                            <button class="btn btn-primary dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px; z-index: 2;"> 
-                                ' . $_SESSION["user_name"] . '
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="profileDropdown" style="z-index: 2;">
-                                <li><a class="dropdown-item" href="profile.php">Profile</a></li>
-                                <li><a class="dropdown-item" href="MyListings.php">My Listings</a></li>
-                                <li><a class="dropdown-item" href="Wishlist.php">Wishlist</a></li>
-                                <li><a class="dropdown-item" href="messages.php">Messages</a></li>
-                                <li><a class="dropdown-item" href="logout.php">Logout</a></li>
-                            </ul>
-                        </div>';
-                } else {
-                    // If the user is not logged in, show Sign In and Register buttons
-                    echo '<a class="btn btn-primary btn-lg ms-md-2" role="button" data-bss-hover-animate="pulse" href="login.php" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px;">Sign In</a>
-                        <a class="btn btn-primary btn-lg ms-md-2" role="button" data-bss-hover-animate="pulse" href="RegisterForm.html" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px;">Register</a>';
-                }
-                ?>
+                <?php if (isUserLoggedIn()): ?>
+                    <?php renderUserDropdown(); ?>
+                <?php else: ?>
+                    <?php renderGuestButtons(); ?>
+                <?php endif; ?>
             </div>
         </div>
     </nav>
@@ -192,5 +202,4 @@ if ($con->connect_error) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/6.4.8/swiper-bundle.min.js"></script>
     <script src="assets/js/Simple-Slider.js"></script>
 </body>
-
 </html>

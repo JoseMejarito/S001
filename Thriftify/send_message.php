@@ -1,9 +1,6 @@
 <?php
 session_start();
 
-error_reporting(E_ALL);
-ini_set('display_errors', true);
-
 $host = "localhost";
 $username = "root";
 $password = "";
@@ -11,52 +8,92 @@ $database = "database";
 
 $con = new MySQLi($host, $username, $password, $database);
 
-if ($con->connect_error) {
-    die("Connection failed: " . $con->connect_error);
+// Additional check for user authentication
+if (!isset($_SESSION["user_id"])) {
+    header("Location: login.php");
+    exit();
 }
 
-$user_id = $_SESSION['user_id'];
-
-// Retrieve user information
-$query = "SELECT * FROM users WHERE user_id = '$user_id'";
-$result = $con->query($query);
-
-if ($result) {
-    $user = $result->fetch_assoc();
+// Check if the user clicked on a user to start a chat
+if (isset($_GET["user_id"])) {
+    $recipientId = $_GET["user_id"];
 } else {
-    echo "Error: " . $query . "<br>" . $con->error;
+    // Redirect to the contact list if no user is selected
+    header("Location: messages.php");
+    exit();
+}
+
+// Check if the recipient exists in the database
+$stmt = $con->prepare("SELECT name FROM users WHERE user_id = ?");
+$stmt->bind_param("i", $recipientId);
+$stmt->execute();
+$stmt->store_result();
+
+if ($stmt->num_rows === 0) {
+    // Redirect to the contact list if the recipient doesn't exist
+    header("Location: messages.php");
+    exit();
+}
+
+// Function to get messages between the current user and the recipient
+function getMessages($con, $userId, $recipientId) {
+    $query = "SELECT * FROM messages WHERE (user_id = $userId AND seller_id = $recipientId) OR (user_id = $recipientId AND seller_id = $userId) ORDER BY timestamp ASC";
+    $result = $con->query($query);
+
+    $messages = [];
+    while ($row = $result->fetch_assoc()) {
+        $messages[] = $row;
+    }
+
+    return $messages;
+}
+
+// Function to send a message with image attachment
+function sendMessage($con, $userId, $recipientId, $message, $image) {
+    $message = $con->real_escape_string($message);
+
+    // Check if there is an image attachment
+    if (!empty($image["name"])) {
+        $targetDirectory = "public/"; // Specify your upload directory for images
+        $targetFile = $targetDirectory . basename($image["name"]);
+
+        // Move the uploaded image to the specified directory
+        if (move_uploaded_file($image["tmp_name"], $targetFile)) {
+            $imagePath = $targetFile;
+
+            // Insert the message with image attachment into the database
+            $query = "INSERT INTO messages (user_id, seller_id, message, image_path) VALUES ($userId, $recipientId, '$message', '$imagePath')";
+            $result = $con->query($query);
+
+            return $result;
+        } else {
+            // Handle image upload error
+            echo "Sorry, there was an error uploading your image.";
+            return false;
+        }
+    } else {
+        // Insert the message without image attachment into the database
+        $query = "INSERT INTO messages (user_id, seller_id, message) VALUES ($userId, $recipientId, '$message')";
+        $result = $con->query($query);
+
+        return $result;
+    }
 }
 
 // Check if the form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Handle optional changes
-    $newName = isset($_POST["newName"]) ? $_POST["newName"] : $user['name'];
-    $newEmail = isset($_POST["newEmail"]) ? $_POST["newEmail"] : $user['email'];
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["message"])) {
+    $userId = $_SESSION["user_id"];
+    $message = $_POST["message"];
+    $image = $_FILES["image"]; // Image attachment from the form
 
-    // Verify the old password
-    $oldPassword = isset($_POST["oldPassword"]) ? $_POST["oldPassword"] : '';
-    if (password_verify($oldPassword, $user['password'])) {
-        // Handle password change and hashing
-        $newPassword = isset($_POST["newPassword"]) ? password_hash($_POST["newPassword"], PASSWORD_DEFAULT) : $user['password'];
-
-        // Update user information
-        $updateQuery = "UPDATE users SET name = '$newName', email = '$newEmail', password = '$newPassword' WHERE user_id = '$user_id'";
-        $updateResult = $con->query($updateQuery);
-
-        if ($updateResult) {
-            // Store the updated name in the session
-            $_SESSION["user_name"] = $newName;
-
-            // Redirect to the profile page or handle success accordingly
-            header("Location: profile.php");
-            exit();
-        } else {
-            echo "Error: " . $updateQuery . "<br>" . $con->error;
-        }
-    } else {
-        echo "Error: The old password you entered is incorrect.";
-    }
+    // Call the sendMessage function to save the message with image attachment
+    sendMessage($con, $userId, $recipientId, $message, $image);
 }
+
+// Get the recipient's name
+$stmt->bind_result($recipientName);
+$stmt->fetch();
+$stmt->close();
 ?>
 
 <!DOCTYPE html>
@@ -65,7 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Profile</title>
+    <title>Send Message</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bebas+Neue&amp;display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
@@ -80,12 +117,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body style="font-family: 'Bebas Neue', serif;">
-<?php
-    function isUserLoggedIn() {
+    <?php
+    function isUserLoggedIn()
+    {
         return isset($_SESSION["user_id"]);
     }
 
-    function renderUserDropdown() {
+    function renderUserDropdown()
+    {
         echo '<div class="dropdown">
                 <button class="btn btn-primary dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px; z-index: 2;"> 
                     ' . $_SESSION["user_name"] . '
@@ -100,7 +139,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>';
     }
 
-    function renderGuestButtons() {
+    function renderGuestButtons()
+    {
         echo '<a class="btn btn-primary btn-lg ms-md-2" role="button" data-bss-hover-animate="pulse" href="login.php" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px;">Sign In</a>
             <a class="btn btn-primary btn-lg ms-md-2" role="button" data-bss-hover-animate="pulse" href="RegisterForm.html" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px;">Register</a>';
     }
@@ -118,51 +158,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </nav>
+
     <div class="container mt-5">
-        <h2>Edit Profile</h2>
-        <form action="" method="post" onsubmit="return confirmChanges();">
-            <div class="mb-3">
-                <label for="newName" class="form-label">New Name</label>
-                <input type="text" class="form-control" id="newName" name="newName" value="<?php echo $user['name']; ?>">
+        <h3 class="mb-4">Chatting with <?php echo $recipientName; ?></h3>
+        <div class="chat-container border p-3 bg-white">
+            <?php
+            // Display messages
+            $messages = getMessages($con, $_SESSION["user_id"], $recipientId);
+            foreach ($messages as $message) {
+                $sender = ($message["user_id"] == $_SESSION["user_id"]) ? "You" : $recipientName;
+                $imageLink = (!empty($message["image_path"])) ? '<img src="' . $message["image_path"] . '" alt="Attached Image" style="max-width:100%; max-height:100%;">' : '';
+                echo '<div class="card bg-light mb-3">
+                        <div class="card-body">
+                            <p class="card-text"><strong>' . $sender . ':</strong> ' . $message["message"] . '</p>
+                            ' . $imageLink . '
+                        </div>
+                    </div>';
+            }
+            ?>
+        </div>
+        <form action="send_message.php?user_id=<?php echo $recipientId; ?>" method="post" enctype="multipart/form-data">
+            <div class="input-group">
+                <input type="text" name="message" class="form-control" placeholder="Type your message here" required>
+                <!-- Replace file input with an image input -->
+                <div class="input-group">
+                    <label class="btn text-white" style="background: #1e1e1e">
+                        Attach Image
+                        <input type="file" name="image" accept="image/*" style="display: none;" onchange="displayFileName(this)">
+                    </label>
+                </div>
+                <!-- Add a span to display the selected image name -->
+                <span id="file-name"></span>
+                <button class="btn text-white" type="submit" style="background: #1e1e1e">Send</button>
             </div>
-            <div class="mb-3">
-                <label for="newEmail" class="form-label">New Email</label>
-                <input type="email" class="form-control" id="newEmail" name="newEmail" value="<?php echo $user['email']; ?>">
-            </div>
-            <div class="mb-3">
-                <label for="oldPassword" class="form-label">Old Password</label>
-                <input type="password" class="form-control" id="oldPassword" name="oldPassword">
-            </div>
-            <div class="mb-3">
-                <label for="newPassword" class="form-label">New Password</label>
-                <input type="password" class="form-control" id="newPassword" name="newPassword">
-            </div>
-            <button type="submit" class="btn btn-primary">Save Changes</button>
-            <a href="profile.php" class="btn btn-secondary">Cancel</a>
-            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteAccountModal">Delete Account</button>
         </form>
     </div>
 
-    <div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteAccountModalLabel">Delete Account</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Are you sure you want to delete your account?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <form action="deleteAccount.php" method="post">
-                        <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
-                        <button type="submit" class="btn btn-danger">Delete Account</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
     <section class="py-4 py-xl-5">
         <div class="container">
             <div class="border rounded border-0 d-flex flex-column justify-content-center align-items-center p-4 py-5" style="height: 500px;background: url(&quot;assets/img/dior-fall-mens-2020-campaign-6900x687-1@2x.png&quot;) center / cover;"></div>
@@ -185,15 +216,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </footer>
     </section>
-    <script>
-        function confirmChanges() {
-            return confirm("Are you sure you want to save the changes?");
-        }
-    </script>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/6.4.8/swiper-bundle.min.js"></script>
     <script src="assets/js/Simple-Slider.js"></script>
+    <script>
+    // Function to display the selected image name
+    function displayFileName(input) {
+        const fileName = input.files[0].name;
+        document.getElementById("file-name").innerText = fileName;
+    }
+    </script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 04, 2023 at 04:11 AM
+-- Generation Time: Dec 10, 2023 at 03:20 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -20,17 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `database`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `contacts`
---
-
-CREATE TABLE `contacts` (
-  `user_id` int(11) NOT NULL,
-  `contact_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -83,11 +72,25 @@ INSERT INTO `listings` (`listing_id`, `user_id`, `product_name`, `product_descri
 
 CREATE TABLE `messages` (
   `message_id` int(11) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `contact_id` int(11) DEFAULT NULL,
-  `message` text DEFAULT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT current_timestamp()
+  `user_id` int(11) NOT NULL,
+  `seller_id` int(11) NOT NULL,
+  `message` text NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `is_read` tinyint(1) NOT NULL DEFAULT 0,
+  `image_path` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `messages`
+--
+
+INSERT INTO `messages` (`message_id`, `user_id`, `seller_id`, `message`, `timestamp`, `is_read`, `image_path`) VALUES
+(1, 19, 18, 'pre', '2023-12-06 12:38:26', 0, NULL),
+(2, 18, 19, 'yo', '2023-12-06 12:38:46', 0, NULL),
+(3, 19, 18, 'pabili', '2023-12-06 12:39:07', 0, NULL),
+(4, 19, 18, 'eto', '2023-12-06 12:39:28', 0, 'public/1.jpg'),
+(5, 18, 19, 'ge', '2023-12-06 12:39:58', 0, NULL),
+(6, 19, 16, 'hi', '2023-12-10 14:15:30', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -99,17 +102,17 @@ CREATE TABLE `users` (
   `user_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `password` varchar(150) NOT NULL,
-  `listing_count` int(11) DEFAULT 0
+  `password` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `listing_count`) VALUES
-(16, 'seller', 'seller@gmail.com', '$2y$10$OiHT0LaLcN8xHoM6GI6UierjRCfRUqysaqeMDk.CAGZkW47fh6swu', 0),
-(17, 'buyer', 'buyer@gmail.com', '$2y$10$Ov4rT5Fhv6bbzew2IXo6ze2M3ahzz/Matem1polCk.iM12N1mjZOO', 0);
+INSERT INTO `users` (`user_id`, `name`, `email`, `password`) VALUES
+(16, 'seller', 'seller@gmail.com', '$2y$10$OiHT0LaLcN8xHoM6GI6UierjRCfRUqysaqeMDk.CAGZkW47fh6swu'),
+(18, 'admin', 'admin@gmail.com', '$2y$10$kKKAEeOejfswhFneCVljye9p7KWVc4bXJKgywL7qCJWoE10tgiHeK'),
+(19, 'mang juan', '123@gmail.com', '$2y$10$mxTcsGeqCn9qOjTxAIGXse6g2cCLyTqgR.evjwjjMCjYSUuFiDSZG');
 
 -- --------------------------------------------------------
 
@@ -128,18 +131,14 @@ CREATE TABLE `wishlist` (
 --
 
 INSERT INTO `wishlist` (`wishlist_id`, `user_id`, `listing_id`) VALUES
-(10, 17, 35);
+(13, 18, 29),
+(14, 18, 25),
+(15, 19, 29),
+(17, 18, 26);
 
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `contacts`
---
-ALTER TABLE `contacts`
-  ADD PRIMARY KEY (`user_id`,`contact_id`),
-  ADD KEY `contact_id` (`contact_id`);
 
 --
 -- Indexes for table `listings`
@@ -152,9 +151,7 @@ ALTER TABLE `listings`
 -- Indexes for table `messages`
 --
 ALTER TABLE `messages`
-  ADD PRIMARY KEY (`message_id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `contact_id` (`contact_id`);
+  ADD PRIMARY KEY (`message_id`);
 
 --
 -- Indexes for table `users`
@@ -179,49 +176,35 @@ ALTER TABLE `wishlist`
 -- AUTO_INCREMENT for table `listings`
 --
 ALTER TABLE `listings`
-  MODIFY `listing_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `listing_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `wishlist`
 --
 ALTER TABLE `wishlist`
-  MODIFY `wishlist_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `wishlist_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `contacts`
---
-ALTER TABLE `contacts`
-  ADD CONSTRAINT `contacts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
-  ADD CONSTRAINT `contacts_ibfk_2` FOREIGN KEY (`contact_id`) REFERENCES `users` (`user_id`);
-
---
 -- Constraints for table `listings`
 --
 ALTER TABLE `listings`
   ADD CONSTRAINT `listings_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
-
---
--- Constraints for table `messages`
---
-ALTER TABLE `messages`
-  ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
-  ADD CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`contact_id`) REFERENCES `users` (`user_id`);
 
 --
 -- Constraints for table `wishlist`

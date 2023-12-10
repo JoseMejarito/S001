@@ -68,31 +68,41 @@ function getCoreName($core) {
 </head>
 
 <body style="font-family: 'Bebas Neue', serif;">
+    <?php
+    function isUserLoggedIn() {
+        return isset($_SESSION["user_id"]);
+    }
+
+    function renderUserDropdown() {
+        echo '<div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px; z-index: 2;"> 
+                    ' . $_SESSION["user_name"] . '
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="profileDropdown" style="z-index: 2;">
+                    <li><a class="dropdown-item" href="profile.php">Profile</a></li>
+                    <li><a class="dropdown-item" href="MyListings.php">My Listings</a></li>
+                    <li><a class="dropdown-item" href="Wishlist.php">Wishlist</a></li>
+                    <li><a class="dropdown-item" href="messages.php">Messages</a></li>
+                    <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+                </ul>
+            </div>';
+    }
+
+    function renderGuestButtons() {
+        echo '<a class="btn btn-primary btn-lg ms-md-2" role="button" data-bss-hover-animate="pulse" href="login.php" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px;">Sign In</a>
+            <a class="btn btn-primary btn-lg ms-md-2" role="button" data-bss-hover-animate="pulse" href="RegisterForm.html" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px;">Register</a>';
+    }
+    ?>
+
     <nav class="navbar navbar-dark navbar-expand-md bg-dark py-3" style="border-color: #1e1e1e; border-top-color: rgb(33,37,41); border-left-color: 37;">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="HomePage.php"><span class="fs-1">Thriftify</span></a>
             <div class="btn-group" role="group">
-                <?php
-                if (isset($_SESSION["user_id"])) {
-                    // If the user is logged in, show the profile dropdown
-                    echo '<div class="dropdown">
-                            <button class="btn btn-primary dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px; z-index: 2;"> 
-                                ' . $_SESSION["user_name"] . '
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="profileDropdown" style="z-index: 2;">
-                                <li><a class="dropdown-item" href="profile.php">Profile</a></li>
-                                <li><a class="dropdown-item" href="MyListings.php">My Listings</a></li>
-                                <li><a class="dropdown-item" href="Wishlist.php">Wishlist</a></li>
-                                <li><a class="dropdown-item" href="messages.php">Messages</a></li>
-                                <li><a class="dropdown-item" href="logout.php">Logout</a></li>
-                            </ul>
-                        </div>';
-                } else {
-                    // If the user is not logged in, show Sign In and Register buttons
-                    echo '<a class="btn btn-primary btn-lg ms-md-2" role="button" data-bss-hover-animate="pulse" href="login.php" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px;">Sign In</a>
-                        <a class="btn btn-primary btn-lg ms-md-2" role="button" data-bss-hover-animate="pulse" href="RegisterForm.html" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px;">Register</a>';
-                }
-                ?>
+                <?php if (isUserLoggedIn()): ?>
+                    <?php renderUserDropdown(); ?>
+                <?php else: ?>
+                    <?php renderGuestButtons(); ?>
+                <?php endif; ?>
             </div>
         </div>
     </nav>
@@ -104,66 +114,71 @@ function getCoreName($core) {
                 </div>
             </div>
             <?php
-            // Fetch the latest 3 listings in the Men's Fashion category
-            $menFashionQuery = "SELECT * FROM listings WHERE category = 1 ORDER BY created_at DESC";
-            $menFashionResult = $con->query($menFashionQuery);
+$ArchiveCoreQuery = "SELECT * FROM listings WHERE category = 1 ORDER BY created_at DESC";
+$ArchiveCoreResult = $con->query($ArchiveCoreQuery);
 
-            // Check if there are listings
-            if ($menFashionResult->num_rows > 0) {
-                // Open the row div outside of the while loop
-                echo '<div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">';
+// Check if there are listings
+if ($ArchiveCoreResult->num_rows > 0) {
+    // Open the row div outside of the while loop
+    echo '<div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">';
 
-                while ($row = $menFashionResult->fetch_assoc()) {
-                    // Display the listing card
-                    echo '<div class="col" type="button">
-                            <div class="card">
-                                <img class="card-img-top w-100 d-block fit-cover h-100" style="height: 200px;" src="' . $row["image_path"] . '">
-                                <div class="card-body p-4">
-                                    <p class="text-primary card-text mb-0">PHP ' . $row["product_price"] . '</p>
-                                    <h4 class="card-title">' . $row["product_name"] . '</h4>
-                                    <p class="card-text">' . $row["product_description"] . '</p>
-                                    <div>
-                                        <p class="fw-bold mb-0" type="button">' . $row["seller_name"] . '</p>
-                                        <p class="text-muted mb-0">' . $row["location"] . '</p>
-                                    </div>';
-                                    echo '<div class="mt-3">
-                                    <p>Category: <a>' . getCategoryName($row["category"]) . '</a></p>
-                                    <p>Core: <a>' . getCoreName($row["core"]) . '</a></p>
-                                    </div>';
-                    // Display appropriate buttons based on user login status
-                    if (isset($_SESSION["user_id"])) {
-                        // User is logged in
-                        $isSeller = ($_SESSION["user_name"] == $row["seller_name"]);
+    while ($row = $ArchiveCoreResult->fetch_assoc()) {
+        // Display the listing card
+        echo '<div class="col" type="button" onclick="redirectToItemPage(' . $row["listing_id"] . ')">
+                <div class="card">
+                    <img class="card-img-top w-100 d-block fit-cover h-100" style="height: 200px;" src="' . $row["image_path"] . '">
+                    <div class="card-body p-4">
+                        <p class="text-primary card-text mb-0">PHP ' . $row["product_price"] . '</p>
+                        <h4 class="card-title">' . $row["product_name"] . '</h4>
+                        <p class="card-text">' . $row["product_description"] . '</p>
+                        <div>
+                            <p class="fw-bold mb-0" type="button">' . $row["seller_name"] . '</p>
+                            <p class="text-muted mb-0">' . $row["location"] . '</p>
+                        </div>';
+        echo '<div class="mt-3">
+                            <p>Category: <a>' . getCategoryName($row["category"]) . '</a></p>
+                            <p>Core: <a>' . getCoreName($row["core"]) . '</a></p>
+                        </div>';
+        // Display appropriate buttons based on user login status
+        if (isset($_SESSION["user_id"])) {
+            // User is logged in
+            $isSeller = ($_SESSION["user_name"] == $row["seller_name"]);
 
-                        if ($isSeller) {
-                            // If the user is the seller
-                            echo '<div class="mt-3">
-                                    <a href="edit_listing.php?listing_id=' . $row["listing_id"] . '" class="btn btn-warning">Edit</a>
-                                    <a href="delete_listing.php?listing_id=' . $row["listing_id"] . '" class="btn btn-danger" onclick="return confirm(\'Are you sure you want to delete this listing?\')">Delete</a>
+            if ($isSeller) {
+                // If the user is the seller
+                echo '<div class="mt-3">
+                                    <a href="edit_listing.php?listing_id=' . $row["listing_id"] . '" class="btn btn-dark">Edit</a>
+                                    <a href="delete_listing.php?listing_id=' . $row["listing_id"] . '" class="btn btn-dark" onclick="return confirm(\'Are you sure you want to delete this listing?\')">Delete</a>
                                 </div>';
-                        } else {
-                            // If the user is not the seller
-                            echo '<div class="mt-3">
-                                    <button class="btn btn-success me-2" type="button" onclick="addToWishlist(' . $row["listing_id"] . ');">Add to Wishlist</button>
-                                    <button class="btn btn-info" type="button" onclick="window.location.href=\'send_message.php?seller_id=' . $row["seller_id"] . '\';">Message</button>
-                                </div>';
-                        }
-                    }
-
-                    echo '</div>
-                        </div>
-                    </div>';
-                }
-
-                // Close the row div after the while loop ends
-                echo '</div>';
             } else {
-                // If no listings found
-                echo '<div class="col-md-8 col-xl-6 text-center mx-auto">
+                // If the user is not the seller
+                echo '<div class="mt-3">
+                                    <button class="btn btn-dark me-2" type="button" onclick="addToWishlist(' . $row["listing_id"] . ');">Add to Wishlist</button>
+                                </div>';
+            }
+        }
+
+        echo '</div>
+                </div>
+            </div>';
+    }
+
+    // Close the row div after the while loop ends
+    echo '</div>';
+} else {
+    // If no listings found
+    echo '<div class="col-md-8 col-xl-6 text-center mx-auto">
                         <p>Nothing to show here</p>
                     </div>';
-            }
-            ?>
+}
+?>
+
+<script>
+    function redirectToItemPage(listingId) {
+        window.location.href = 'ItemPage.php?listing_id=' + listingId;
+    }
+</script>
+
         </div>
     </section>
     <section class="py-4 py-xl-5">

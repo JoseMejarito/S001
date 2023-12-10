@@ -36,91 +36,76 @@ if (!isset($_SESSION["user_id"])) {
 </head>
 
 <body style="font-family: 'Bebas Neue', serif;">
+<?php
+    function isUserLoggedIn() {
+        return isset($_SESSION["user_id"]);
+    }
+
+    function renderUserDropdown() {
+        echo '<div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px; z-index: 2;"> 
+                    ' . $_SESSION["user_name"] . '
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="profileDropdown" style="z-index: 2;">
+                    <li><a class="dropdown-item" href="profile.php">Profile</a></li>
+                    <li><a class="dropdown-item" href="MyListings.php">My Listings</a></li>
+                    <li><a class="dropdown-item" href="Wishlist.php">Wishlist</a></li>
+                    <li><a class="dropdown-item" href="messages.php">Messages</a></li>
+                    <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+                </ul>
+            </div>';
+    }
+
+    function renderGuestButtons() {
+        echo '<a class="btn btn-primary btn-lg ms-md-2" role="button" data-bss-hover-animate="pulse" href="login.php" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px;">Sign In</a>
+            <a class="btn btn-primary btn-lg ms-md-2" role="button" data-bss-hover-animate="pulse" href="RegisterForm.html" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px;">Register</a>';
+    }
+    ?>
+
     <nav class="navbar navbar-dark navbar-expand-md bg-dark py-3" style="border-color: #1e1e1e; border-top-color: rgb(33,37,41); border-left-color: 37;">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="HomePage.php"><span class="fs-1">Thriftify</span></a>
             <div class="btn-group" role="group">
-                <?php
-                if (isset($_SESSION["user_id"])) {
-                    // If the user is logged in, show the profile dropdown
-                    echo '<div class="dropdown">
-                            <button class="btn btn-primary dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px; z-index: 2;"> 
-                                ' . $_SESSION["user_name"] . '
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="profileDropdown" style="z-index: 2;">
-                                <li><a class="dropdown-item" href="profile.php">Profile</a></li>
-                                <li><a class="dropdown-item" href="MyListings.php">My Listings</a></li>
-                                <li><a class="dropdown-item" href="Wishlist.php">Wishlist</a></li>
-                                <li><a class="dropdown-item" href="messages.php">Messages</a></li>
-                                <li><a class="dropdown-item" href="logout.php">Logout</a></li>
-                            </ul>
-                        </div>';
-                } else {
-                    // If the user is not logged in, show Sign In and Register buttons
-                    echo '<a class="btn btn-primary btn-lg ms-md-2" role="button" data-bss-hover-animate="pulse" href="login.php" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px;">Sign In</a>
-                        <a class="btn btn-primary btn-lg ms-md-2" role="button" data-bss-hover-animate="pulse" href="RegisterForm.html" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px;">Register</a>';
-                }
-                ?>
+                <?php if (isUserLoggedIn()): ?>
+                    <?php renderUserDropdown(); ?>
+                <?php else: ?>
+                    <?php renderGuestButtons(); ?>
+                <?php endif; ?>
             </div>
         </div>
     </nav>
-    <div class="container mt-5">
-        <h2>Messages</h2>
-        <div class="messenger-container">
-            <div class="contacts">
-                <h4>Contacts</h4>
-                <ul class="contact-list">
-                    <?php
-                    $user_id = $_SESSION["user_id"];
-                    $contacts_query = $con->query("SELECT DISTINCT contact_id FROM messages WHERE user_id = $user_id");
-
-                    if ($contacts_query->num_rows > 0) {
-                        while ($contact_row = $contacts_query->fetch_assoc()) {
-                            $contact_id = $contact_row["contact_id"];
-                            echo "<li class='contact-list-item'><a href='messages.php?user_id=$contact_id'>User $contact_id</a></li>";
-                        }
-                    } else {
-                        echo "<p>Nothing to see here.</p>";
-                    }
-                    ?>
-                </ul>
-            </div>
-
-            <div class="messages">
+    
+    <section class="py-4 py-xl-5">
+        <div class="container">
+            <h1 class="mb-4">Contact List</h1>
+            <div class="row">
                 <?php
-                if (isset($_GET["user_id"])) {
-                    $selectedUserId = $_GET["user_id"];
+                $sql = "SELECT user_id, name FROM users";
+                $result = $con->query($sql);
 
-                    $messages_query = $con->query("SELECT * FROM messages WHERE (user_id = $user_id AND contact_id = $selectedUserId) OR (user_id = $selectedUserId AND contact_id = $user_id) ORDER BY timestamp");
-
-                    if ($messages_query->num_rows > 0) {
-                        echo "<h4>Conversation with User $selectedUserId</h4>";
-                        echo "<ul class='message-list'>";
-                        while ($message_row = $messages_query->fetch_assoc()) {
-                            echo "<li class='message-list-item'>" . $message_row["message"] . "</li>";
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        // Exclude the current user from the contact list
+                        if ($row["user_id"] != $_SESSION["user_id"]) {
+                            echo '<div class="col-6 col-lg-4 mb-4">
+                                    <a class="text-decoration-none text-reset" href="send_message.php?user_id=' . $row["user_id"] . '">
+                                        <div class="card bg-light h-100">
+                                            <div class="card-body text-center">
+                                                <h5 class="card-title">' . $row["name"] . '</h5>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>';
                         }
-                        echo "</ul>";
-                    } else {
-                        echo "<p>No messages with User $selectedUserId.</p>";
                     }
                 } else {
-                    echo "<p>Select a user to start a conversation.</p>";
+                    echo "No users found";
                 }
+                $con->close();
                 ?>
-
-                <div class="message-input">
-                    <form action="" method="post">
-                        <div class="mb-3">
-                            <label for="message">Your Message:</label>
-                            <textarea id="message" name="message" rows="3" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Send</button>
-                    </form>
-                </div>
             </div>
         </div>
-    </div>
-
+    </section>
 
     <section class="py-4 py-xl-5">
         <div class="container">

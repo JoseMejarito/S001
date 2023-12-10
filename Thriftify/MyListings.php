@@ -82,36 +82,54 @@ function getCoreName($core) {
 </head>
 
 <body style="font-family: 'Bebas Neue', serif;">
+<?php
+    function isUserLoggedIn() {
+        return isset($_SESSION["user_id"]);
+    }
+
+    function renderUserDropdown() {
+        echo '<div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px; z-index: 2;"> 
+                    ' . $_SESSION["user_name"] . '
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="profileDropdown" style="z-index: 2;">
+                    <li><a class="dropdown-item" href="profile.php">Profile</a></li>
+                    <li><a class="dropdown-item" href="MyListings.php">My Listings</a></li>
+                    <li><a class="dropdown-item" href="Wishlist.php">Wishlist</a></li>
+                    <li><a class="dropdown-item" href="messages.php">Messages</a></li>
+                    <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+                </ul>
+            </div>';
+    }
+
+    function renderGuestButtons() {
+        echo '<a class="btn btn-primary btn-lg ms-md-2" role="button" data-bss-hover-animate="pulse" href="login.php" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px;">Sign In</a>
+            <a class="btn btn-primary btn-lg ms-md-2" role="button" data-bss-hover-animate="pulse" href="RegisterForm.html" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px;">Register</a>';
+    }
+    ?>
+
     <nav class="navbar navbar-dark navbar-expand-md bg-dark py-3" style="border-color: #1e1e1e; border-top-color: rgb(33,37,41); border-left-color: 37;">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="HomePage.php"><span class="fs-1">Thriftify</span></a>
             <div class="btn-group" role="group">
-                <?php
-                if (isset($_SESSION["user_id"])) {
-                    echo '<div class="dropdown">
-                            <button class="btn btn-primary dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px; z-index: 2;"> 
-                                ' . $_SESSION["user_name"] . '
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="profileDropdown" style="z-index: 2;">
-                                <li><a class="dropdown-item" href="profile.php">Profile</a></li>
-                                <li><a class="dropdown-item" href="MyListings.php">My Listings</a></li>
-                                <li><a class="dropdown-item" href="Wishlist.php">Wishlist</a></li>
-                                <li><a class="dropdown-item" href="messages.php">Messages</a></li>
-                                <li><a class="dropdown-item" href="logout.php">Logout</a></li>
-                            </ul>
-                        </div>';
-                        $current_page = basename($_SERVER['PHP_SELF']);
-                        if ($current_page == 'MyListings.php') {
-                            echo '<a href="NewListing.php" class="btn btn-primary ms-md-2" role="button" data-bss-hover-animate="pulse" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px;">New Listing</a>';
+                <?php if (isUserLoggedIn()): ?>
+                    <?php renderUserDropdown(); ?>
+                    
+                    <?php
+                        // Check if the current page is MyListings.php
+                        $currentPage = basename($_SERVER['PHP_SELF']);
+                        if ($currentPage == 'MyListings.php') {
+                            echo '<a href="NewListing.php" class="btn btn-primary btn-lg ms-md-2" role="button" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px;">New Listing</a>';
                         }
-                } else {
-                    echo '<a class="btn btn-primary btn-lg ms-md-2" role="button" data-bss-hover-animate="pulse" href="login.php" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px;">Sign In</a>
-                        <a class="btn btn-primary btn-lg ms-md-2" role="button" data-bss-hover-animate="pulse" href="RegisterForm.html" style="background: #1e1e1e;border-color: var(--bs-white);font-size: 24px;">Register</a>';
-                }
-                ?>
+                    ?>
+                    
+                <?php else: ?>
+                    <?php renderGuestButtons(); ?>
+                <?php endif; ?>
             </div>
         </div>
     </nav>
+
     <section>
         <div class="container py-4 py-xl-5">
             <div class="row mb-5">
@@ -120,46 +138,44 @@ function getCoreName($core) {
                 </div>
             </div>
             <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
-            <?php
-            // Check if there are listings
-            if (empty($listings)) {
-                echo '<div class="col-md-8 col-xl-6 text-center mx-auto">
-                        <p>Nothing to show here</p>
-                    </div>';
-            } else {
-                // Loop through user's listings and generate card items
-                foreach ($listings as $listing) {
-                    echo '<div class="col">
-                        <div class="card" type="button">
-                            <img class="card-img-top w-100 d-block fit-cover h-100"  src="' . $listing['image_path'] . '">
-                            <div class="card-body p-4">
-                                <p class="text-primary card-text mb-0">PHP ' . $listing['product_price'] . '</p>
-                                <h4 class="card-title">' . $listing['product_name'] . '</h4>
-                                <p class="card-text">' . $listing['product_description'] . '</p>
-                                <div class="d-flex">
-                                    <div>
-                                        <p class="fw-bold mb-0" type="button">' . $listing['seller_name'] . '</p>
-                                        <p class="text-muted mb-0" type="button">' . $listing['location'] . '</p>
+                <?php
+                if (empty($listings)) {
+                    echo '<div class="col-md-8 col-xl-6 text-center mx-auto">
+                            <p>Nothing to show here</p>
+                        </div>';
+                } else {
+                    foreach ($listings as $listing) {
+                        echo '<div class="col">
+                                <div class="card" type="button" onclick="redirectToItemPage(' . $listing["listing_id"] . ')">
+                                    <img class="card-img-top w-100 d-block fit-cover h-100"  src="' . $listing['image_path'] . '">
+                                    <div class="card-body p-4">
+                                        <p class="text-primary card-text mb-0">PHP ' . $listing['product_price'] . '</p>
+                                        <h4 class="card-title">' . $listing['product_name'] . '</h4>
+                                        <p class="card-text">' . $listing['product_description'] . '</p>
+                                        <div class="d-flex">
+                                            <div>
+                                                <p class="fw-bold mb-0" type="button">' . $listing['seller_name'] . '</p>
+                                                <p class="text-muted mb-0" type="button">' . $listing['location'] . '</p>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <p>Category: <a>' . getCategoryName($listing["category"]) . '</a></p>
+                                            <p>Core: <a>' . getCoreName($listing["core"]) . '</a></p>
+                                        </div>
+                                        <div class="mt-3">
+                                            <a href="edit_listing.php?listing_id=' . $listing['listing_id'] . '" class="btn btn-dark">Edit</a>
+                                            <a href="delete_listing.php?listing_id=' . $listing['listing_id'] . '" class="btn btn-dark" onclick="return confirm(\'Are you sure you want to delete this listing?\')">Delete</a>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="mt-3">
-                                    <p>Category: <a>' . getCategoryName($listing["category"]) . '</a></p>
-                                    <p>Core: <a>' . getCoreName($listing["core"]) . '</a></p>
-                                </div>
-                                <div class="mt-3">
-                                    <a href="edit_listing.php?listing_id=' . $listing['listing_id'] . '" class="btn btn-warning">Edit</a>
-                                    <a href="delete_listing.php?listing_id=' . $listing['listing_id'] . '" class="btn btn-danger" onclick="return confirm(\'Are you sure you want to delete this listing?\')">Delete</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>';
+                            </div>';
+                    }
                 }
-                
-            }
-            ?>
-        </div>
+                ?>
+            </div>
         </div>
     </section>
+
     <section class="py-4 py-xl-5">
         <div class="container">
             <div class="border rounded border-0 d-flex flex-column justify-content-center align-items-center p-4 py-5" style="height: 500px;background: url(&quot;assets/img/dior-fall-mens-2020-campaign-6900x687-1@2x.png&quot;) center / cover;"></div>
@@ -182,6 +198,11 @@ function getCoreName($core) {
             </div>
         </footer>
     </section>
+    <script>
+        function redirectToItemPage(listingId) {
+            window.location.href = 'ItemPage.php?listing_id=' + listingId;
+        }
+    </script>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/bs-init.js"></script>

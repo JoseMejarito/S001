@@ -16,10 +16,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
     $email = $_POST["email"];
     $password = $_POST["password"];
 
-    // You should perform user authentication here
-    // Fetch the user from the database and verify the password
-
-    // Example query (you need to adjust this to match your database schema)
     $sql = "SELECT * FROM users WHERE email = '$email'";
 
     $result = $con->query($sql);
@@ -31,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
             // Password is correct, set session variables and redirect
             $_SESSION["user_id"] = $row["user_id"];
             $_SESSION["user_name"] = $row["name"];
-            header("Location: HomePage.php"); // Redirect to the homepage or wherever you want to go after login
+            header("Location: DashboardPage.php"); // Redirect to the homepage or wherever you want to go after login
             exit();
         } else {
             $error_message = "Invalid email or password.";

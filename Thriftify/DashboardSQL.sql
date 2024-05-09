@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 10, 2023 at 03:20 PM
+-- Generation Time: May 08, 2024 at 05:24 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -90,7 +90,8 @@ INSERT INTO `messages` (`message_id`, `user_id`, `seller_id`, `message`, `timest
 (3, 19, 18, 'pabili', '2023-12-06 12:39:07', 0, NULL),
 (4, 19, 18, 'eto', '2023-12-06 12:39:28', 0, 'public/1.jpg'),
 (5, 18, 19, 'ge', '2023-12-06 12:39:58', 0, NULL),
-(6, 19, 16, 'hi', '2023-12-10 14:15:30', 0, NULL);
+(6, 19, 16, 'hi', '2023-12-10 14:15:30', 0, NULL),
+(7, 19, 16, 'Is this still available?', '2023-12-10 15:16:05', 0, 'public/Screenshot 2023-12-10 at 11.14.16 PM.png');
 
 -- --------------------------------------------------------
 
@@ -110,7 +111,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `name`, `email`, `password`) VALUES
-(16, 'seller', 'seller@gmail.com', '$2y$10$OiHT0LaLcN8xHoM6GI6UierjRCfRUqysaqeMDk.CAGZkW47fh6swu'),
+(16, 'jose Mejarito', 'seller@gmail.com', '$2y$10$hgaCRPFRrH3zI2xsiSQ4V.T3ORbXASTs.f/P7SAl4NOOp63WcOWgu'),
 (18, 'admin', 'admin@gmail.com', '$2y$10$kKKAEeOejfswhFneCVljye9p7KWVc4bXJKgywL7qCJWoE10tgiHeK'),
 (19, 'mang juan', '123@gmail.com', '$2y$10$mxTcsGeqCn9qOjTxAIGXse6g2cCLyTqgR.evjwjjMCjYSUuFiDSZG');
 
@@ -134,7 +135,8 @@ INSERT INTO `wishlist` (`wishlist_id`, `user_id`, `listing_id`) VALUES
 (13, 18, 29),
 (14, 18, 25),
 (15, 19, 29),
-(17, 18, 26);
+(17, 18, 26),
+(18, 19, 26);
 
 --
 -- Indexes for dumped tables
@@ -176,13 +178,13 @@ ALTER TABLE `wishlist`
 -- AUTO_INCREMENT for table `listings`
 --
 ALTER TABLE `listings`
-  MODIFY `listing_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `listing_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -194,7 +196,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `wishlist`
 --
 ALTER TABLE `wishlist`
-  MODIFY `wishlist_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `wishlist_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Constraints for dumped tables

@@ -2,7 +2,7 @@
 $host = "localhost";
 $username = "root";
 $password = "";
-$database = "database"; // Replace with your actual database name
+$database = "database";
 
 $con = new MySQLi($host, $username, $password, $database);
 
@@ -15,12 +15,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["Email"];
     $password = $_POST["Password"];
 
-    // Validate user inputs here
-
-    // Hash the password
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    // Use prepared statements to prevent SQL injection
     $stmt = $con->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)");
     $stmt->bind_param("sss", $name, $email, $hashedPassword);
 

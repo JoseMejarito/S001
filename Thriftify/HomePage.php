@@ -57,6 +57,7 @@ function renderUserDropdown() {
             </button>
             <ul class="dropdown-menu" aria-labelledby="profileDropdown" style="z-index: 2;">
                 <li><a class="dropdown-item" href="profile.php">Profile</a></li>
+                <li><a class="dropdown-item" href="DashboardPage.php">Dashboard</a></li>
                 <li><a class="dropdown-item" href="MyListings.php">My Listings</a></li>
                 <li><a class="dropdown-item" href="Wishlist.php">Wishlist</a></li>
                 <li><a class="dropdown-item" href="messages.php">Messages</a></li>
@@ -464,7 +465,6 @@ function renderGuestButtons() {
     </section>
     <script>
         function addToWishlist(listingId) {
-            // AJAX request to add the listing to the wishlist
             $.ajax({
                 type: "POST",
                 url: "add_to_wishlist.php",
